@@ -1,0 +1,787 @@
+<script type="text/javascript">
+      $(function(){
+
+                $('.chosen-select').chosen();
+            })
+</script>
+<alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
+        <div class="searchbox">
+            <div class="col-md-3">
+               <div class="inner-addon right-addon">
+                  <i class="glyphicon glyphicon-search"></i>
+                  <input type="text" ng-model="search" class="form-control search-query pull-left" placeholder="Search&hellip;" />
+                </div>
+            </div>
+        </div>
+        <span class="input-group-btn">
+                <button ng-click="open()" data-toggle="modal" class="btn btn-success pull-right"><span class="glyphicon glyphicon-plus"> New Brgy Judicial</span></button>
+        </span>
+<br/>
+
+                       <h4>Chosen with a promise: {{foo | json}}</h4>
+                          <select
+                            chosen
+                            multiple
+                            allow-single-deselect="true"
+                            data-placeholder="Choose Your Own Adventure"
+                            no-results-text="'Tough luck'"
+                            ng-model="foo"
+                            ng-options="val.name for (key, val) in optionsFromQuery"
+                            style="width:600px;">
+                            <option value=""></option>
+                          </select>
+
+                    <em>Multiple Select</em>
+                    <div class="controls">
+                    <h4>Chosen with a promise: {{children | json}}</h4>
+                          <select
+                            chosen
+                            multiple
+                            allow-single-deselect="true"
+                            data-placeholder="Choose Your Own Adventure"
+                            no-results-text="'Tough luck'"
+                            ng-model="children"
+                            ng-options="val.prof_firstname for (key, val) in brgy_constituents"
+                            style="width:600px;">
+                            <option value=""></option>
+                          </select>
+                    </div>
+<table ng-table="tableParams" class="table table-hover">
+    <thead>
+        <tr>
+            <th width="50">Avatar</th>
+            <th width="150">Case Type</th>
+            <th width="120">Barangay</th>
+            <th width="120">Date of Filed</th>
+            <th width="150">Complainant</th>
+            <th width="100">Resident</th>
+            <th width="150">Respondent</th>
+            <th width="100">Resident</th>
+            <th width="90">Time</th>
+            <th width="90">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="(key, judicial) in brgyjudicials | orderByPriority | filter:search | orderBy:'name'">
+            <td data-title="'Name'">
+               <img ng-src="icons/person.png" width="30" height="30">
+            </td>
+            <td data-title="'Case Type'">
+                <span ng-if="!judicial.$edit">{{judicial.case_type}}</span>
+                <div ng-if="judicial.$edit"><input class="form-control" type="text" ng-model="judicial.designation" /></div>
+            </td>
+            <td data-title="'Barangay'">
+                <span ng-if="!judicial.$edit">{{judicial.barangay}}</span>
+                <div ng-if="judicial.$edit"><input class="form-control" type="text" ng-model="judicial.designation" /></div>
+            </td>
+            <td data-title="'Date of Filed'">
+                <span ng-if="!judicial.$edit">{{judicial.jud_dob | date}}</span>
+                <div ng-if="judicial.$edit"><input class="form-control" type="text" ng-model="judicial.designation" /></div>
+            </td>
+            <td data-title="'Complainant'">
+                <span ng-if="!judicial.$edit">{{judicial.complainant_fname}} {{judicial.complainant_minitial}} {{judicial.complainant_lname}}</span>
+                <div ng-if="judicial.$edit"><input class="form-control" type="text" ng-model="judicial.designation" /></div>
+            </td>
+            <td data-title="'Resident'">
+                <span ng-if="!judicial.$edit">{{judicial.complainant_resident}}</span>
+                <div ng-if="judicial.$edit"><input class="form-control" type="text" ng-model="judicial.designation" /></div>
+            </td>
+            <td data-title="'Respondent'">
+                <span ng-if="!judicial.$edit">{{judicial.respondent_fname}} {{judicial.respondent_minitial}} {{judicial.respondent_lname}}</span>
+                <div ng-if="judicial.$edit"><input class="form-control" type="text" ng-model="judicial.designation" /></div>
+            </td>
+            <td data-title="'Resident'">
+                <span ng-if="!judicial.$edit">{{judicial.respondent_resident}}</span>
+                <div ng-if="judicial.$edit"><input class="form-control" type="text" ng-model="judicial.designation" /></div>
+            </td>
+            <td data-title="'Time'">
+                <span ng-if="!judicial.$edit">{{judicial.time}}</span>
+                <div ng-if="judicial.$edit"><input class="form-control" type="text" ng-model="judicial.designation" /></div>
+            </td>
+            <td data-title="'Actions'">
+                <a ng-if="!judicial.$edit" href="" ng-click="open(judicial.$id)"><img ng-src="icons/edit-notes.png" width="30" height="30"></a>
+                <a ng-if="!judicial.$destroy" href="" ng-click="removeRecord(judicial.$id)"><img ng-src="icons/Delete_Icon.png" width="30" height="30"></a>
+                <a ng-if="judicial.$edit" href="" class="btn btn-primary btn-xs" ng-click="save()">Save</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div>   
+    <em>Single Select</em>
+      <select data-placeholder="Your Favorite Type of Bear" style="width:350px;" class="chosen-select" tabindex="7">
+                            <option value=""></option>
+                            <option>American Black Bear</option>
+                            <option>Asiatic Black Bear</option>
+                            <option>Brown Bear</option>
+                            <option>Giant Panda</option>
+                            <option selected>Sloth Bear</option>
+                            <option disabled>Sun Bear</option>
+                            <option>Polar Bear</option>
+                            <option disabled>Spectacled Bear</option>
+                          </select>
+                        </div>
+                        <div>
+                          <em>Multiple Select</em>
+                          <select data-placeholder="Your Favorite Types of Bear" style="width:350px;" multiple class="chosen-select" tabindex="8">
+                            <option value=""></option>
+                            <option>American Black Bear</option>
+                            <option>Asiatic Black Bear</option>
+                            <option>Brown Bear</option>
+                            <option>Giant Panda</option>
+                            <option selected>Sloth Bear</option>
+                            <option disabled>Sun Bear</option>
+                            <option selected>Polar Bear</option>
+                            <option disabled>Spectacled Bear</option>
+                          </select>
+                        </div></div><br /> 
+
+<script type="text/ng-template" id="add_user_modal">
+    
+    <div class="modal-header">
+        <h3>Barangay Judicial Form</h3>
+    </div>
+    <div class="modal-body">
+
+            <form name="userForm" class="form-inline">
+                <!--<alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>-->
+        
+        <div class="well">
+            <tabset justified="true">
+                <tab heading="Profile"> <br /><br />
+
+            <div class="row">
+                <div class="col-lg-5">
+                <em>Multiple Select</em>
+                 <div class="controls">
+                          <select
+                            chosen
+                            multiple
+                            allow-single-deselect="true"
+                            data-placeholder="Choose Your Own Adventure"
+                            no-results-text="'Tough luck'"
+                            ng-model="children"
+                            ng-options="val.prof_firstname for (key, val) in brgy_constituents"
+                            style="width:600px;">
+                            <option value=""></option>
+                          </select>
+                    </div>
+                    <div>
+                        <label class="control-label" for="case_type">Case Type</label>
+                        <div class="controls">
+                            <input id="case_type" name="case_type" ng-model="judicial.case_type" type="text"  class="form-control" required=""  ng-class="{error: judicial.case_type.$invalid && !judicial.case_type.$pristine}"/>
+                        </div>
+                    </div> <br />
+
+                    <div>
+                        <label class="control-label" for="barangay">Barangay</label>
+                        <div class="controls">
+                            <input id="barangay" name="barangay" ng-model="judicial.barangay" type="text" placeholder="Barangay" class="form-control" required=""  ng-class="{error: judicial.barangay.$invalid && !judicial.barangay.$pristine}"/>
+                        </div>
+                    </div> <br /> 
+
+                    <div class="control-group" ng-class="{error: judicial.jud_dob.$invalid && !judicial.jud_dob.$pristine}">
+                        <label class="control-label" for="jud_dob">Date</label>
+                        <div class="controls">
+                            <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="judicial.jud_dob" min="minDate" max="'2015-06-22'" datepicker-options="" date-disabled="disabled(date, mode)" ng-required="false" show-weeks="false" show-button-bar="true" />
+                        </div>
+                    </div> <br /><br />
+
+                    <div class="control-group" ng-class="{error: judicial.complainant_lname.$invalid && !judicial.complainant_lname.$pristine}">
+                        <label class="control-label" for="complainant_lname">Complainant Last name</label>
+                        <div class="controls">
+                            <input id="complainant_lname" name="complainant_lname" ng-model="judicial.complainant_lname" type="text" placeholder="Last name" class="form-control"required="" />
+                        </div>
+                    </div> <br />
+
+                    <div class="control-group" ng-class="{error: judicial.complainant_fname.$invalid && !judicial.complainant_fname.$pristine}">
+                        <label class="control-label" for="complainant_fname">Complainant First name</label>
+                        <div class="controls">
+                            <input id="complainant_fname" name="complainant_fname" ng-model="judicial.complainant_fname" type="text" placeholder="First name" class="form-control" required="" />
+                        </div>
+                    </div> </br> 
+
+                    <div class="control-group" ng-class="{error: judicial.complainant_minitial.$invalid && !judicial.complainant_minitial.$pristine}">
+                        <label class="control-label" for="complainant_minitial">Complainant Middle initial</label>
+                        <div class="controls">
+                            <input id="complainant_minitial" name="complainant_minitial" ng-model="judicial.complainant_minitial" type="text" placeholder="M.I" class="form-control" required="" />
+                        </div>
+                    </div> <br />
+
+                    <div class="control-group">
+                        <label class="control-label" for="complainant_resident">Resident in this Barangay?</label>
+                        <div class="controls">
+                            <label class="radio inline" for="Yes">
+                                <input type="radio" name="complainant_resident" ng-model="judicial.complainant_resident" id="yes" value="Yes" checked="checked">
+                               Yes
+                            </label>
+                            <label class="radio inline" for="No">
+                                <input type="radio" name="complainant_resident" ng-model="judicial.complainant_resident" id="no" value="No"> No
+                            </label>
+                        </div>
+                    </div>
+                </div>     
+
+
+                <div class="col-lg-5">
+
+                    <div class="control-group" ng-class="{error: judicial.respondent_lname.$invalid && !judicial.respondent_lname.$pristine}">
+                        <label class="control-label" for="respondent_lname">Respondent Last name</label>
+                        <div class="controls">
+                            <input id="respondent_lname" name="respondent_lname" ng-model="judicial.respondent_lname" type="text" placeholder="Last name" class="form-control"required="" />
+                        </div>
+                    </div> <br />
+                    <div class="control-group" ng-class="{error: judicial.respondent_fname.$invalid && !judicial.respondent_fname.$pristine}">
+                        <label class="control-label" for="respondent_fname">Respondent First name</label>
+                        <div class="controls">
+                            <input id="respondent_fname" name="respondent_fname" ng-model="judicial.respondent_fname" type="text" placeholder="First name" class="form-control" required="" />
+                        </div>
+                    </div> <br />
+
+                    <div class="control-group" ng-class="{error: judicial.respondent_minitial.$invalid && !judicial.respondent_minitial.$pristine}">
+                        <label class="control-label" for="respondent_minitial">Respondent Middle initial</label>
+                        <div class="controls">
+                            <input id="respondent_minitial" name="respondent_minitial" ng-model="judicial.respondent_minitial" type="text" placeholder="M.I" class="form-control" required="" />
+                        </div>
+                    </div> <br /> 
+
+                    <div class="control-group">
+                        <label class="control-label" for="respondent_resident">Resident in this Barangay?</label>
+                        <div class="controls">
+                            <label class="radio inline" for="Yes">
+                                <input type="radio" name="respondent_resident" ng-model="judicial.respondent_resident" id="yes" value="Yes" checked="checked">
+                               Yes
+                            </label>
+                            <label class="radio inline" for="No">
+                                <input type="radio" name="respondent_resident" ng-model="judicial.respondent_resident" id="no" value="No"> No
+                            </label>
+                        </div>
+                    </div> <br /> 
+
+                    <div class="control-group" ng-class="{error: judicial.time.$invalid && !judicial.time.$pristine}">
+                            <label class="control-label" for="time">Time</label>
+                        <div class="controls">
+                            <input id="time" name="time" ng-model="judicial.time" type="text" placeholder="am/pm" class="form-control" required="" />
+                        </div>
+                    </div>
+                </div>    
+            </div>
+                </tab>
+
+                <tab heading="Barangay Economic"> <br /><br /> 
+                <div class="row">
+                    <div class="col-lg-5">
+                        <div class="control-group" ng-class="{error: judicial.ornum.$invalid && !judicial.ornum.$pristine}">
+                                <label class="control-label" for="ornum">OR No.</label>
+                            <div class="controls">
+                                <input id="ornum" name="ornum" ng-model="judicial.ornum" type="text"  class="form-control" required="" />
+                            </div>
+                        </div> <br /> 
+
+                        <div class="control-group" ng-class="{error: judicial.case_num.$invalid && !judicial.case_num.$pristine}">
+                            <label class="control-label" for="case_num">Case No.</label>
+                            <div class="controls">
+                                <input id="case_num" name="case_num" ng-model="judicial.case_num" type="text"  class="form-control" required="" />
+                            </div>
+                        </div> <br /> 
+
+                        <div class="control-group" ng-class="{error: judicial.remarks.$invalid && !judicial.remarks.$pristine}">
+                            <label class="control-label" for="remarks">Remarks</label>
+                            <div class="controls">
+                                <input id="remarks" name="remarks" ng-model="judicial.remarks" type="text"  class="form-control" required="" />
+                            </div>
+                        </div> <br /> 
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="control-group" ng-class="{error: judicial.address.$invalid && !judicial.address.$pristine}">
+                            <label class="control-label" for="address">Address</label>
+                            <div class="controls">
+                                <input id="address" name="address" ng-model="judicial.address" type="text" class="form-control" required="" />
+                            </div>
+                        </div> <br /> 
+
+                        <div class="control-group" ng-class="{error: judicial.employed_fam_members.$invalid && !judicial.employed_fam_members.$pristine}">
+                            <label class="control-label" for="employed_fam_members">Employed Family Members</label>
+                            <div class="controls">
+                                <input id="employed_fam_members" name="employed_fam_members" ng-model="judicial.employed_fam_members" type="text" class="form-control" required="" />
+                            </div>
+                        </div> <br /> <br />
+                    </div>
+                </div>
+                    <div class="well">
+                        <label class="control-label" for="barangay">Total Monthly Income:</label><br /><br />
+                        <label ng-repeat="income in incomes">
+                              <input type="checkbox" checklist-model="judicial.incomes" checklist-value="income"> {{income}}&nbsp;&nbsp;&nbsp;
+                        </label>
+                    </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <label class="control-label" for="barangay"><b>Sources of Income:</b></label> <br /> 
+                        <div class="control-group">
+                            <div class="control-group" ng-class="{error: judicial.employed.$invalid && !judicial.employed.$pristine}">
+                            <label class="control-label" for="employed">Employed</label>
+                            </div>
+                            <div class="controls">
+                                <input id="employed" name="employed" ng-model="judicial.employed" type="text" class="form-control" required="" />
+                            </div>
+                        </div> <br /> <br />
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="control-group"><br />
+                            <div class="control-group" ng-class="{error: judicial.unemployed.$invalid && !judicial.unemployed.$pristine}">
+                            <label class="control-label" for="unemployed">Unemployed</label>
+                            </div>
+                            <div class="controls">
+                                <input id="unemployed" name="unemployed" ng-model="judicial.unemployed" type="text" class="form-control" required="" />
+                            </div>
+                        </div> <br /><br />
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="control-group"><br />
+                            <div class="control-group" ng-class="{error: judicial.selfemployed.$invalid && !judicial.selfemployed.$pristine}">
+                            <label class="control-label" for="selfemployed">Self-Employed/Business</label>
+                            </div>
+                            <div class="controls">
+                                <input id="selfemployed" name="selfemployed" ng-model="judicial.selfemployed" type="text" class="form-control" required="" />
+                            </div>
+                        </div> <br /> 
+                    </div>
+                </div>
+                    <div class="control-group">
+                        <div class="controls">
+                            <label class="checkbox inline" for="others">
+                                <input name="others" class="form-control" id="others" type="checkbox" ng-model="judicial.others" required />Others
+                            </label>
+                        </div>
+                    </div> <br /> 
+
+                    <div class="well">
+                        <label class="control-label" for="barangay judicial and economic">If with home business, what cottage industry are you engaged in ?</label><br /><br />
+                            <label ng-repeat="cottage in cottages">
+                                  <input type="checkbox" checklist-model="judicial.cottages" checklist-value="cottage"> {{cottage}}&nbsp;&nbsp;&nbsp;
+                            </label>
+                    </div> <br /> 
+
+                    <div class="well">
+                        <label class="control-label" for="barangay">Other Economic Activities: </label><br /><br />
+                        <div class="controls">
+                            <label ng-repeat="OEA in OEAs">
+                                  <input type="checkbox" checklist-model="judicial.OEAs" checklist-value="OEA"> {{OEA}}&nbsp;&nbsp;&nbsp;
+                            </label>
+                        </div>
+                    </div> <br /> <br />
+
+                    <label class="control-label" for="barangay">Total Estimate Monthly Family Expenditures:</label><br /><br />
+
+            
+            <div class="row">
+
+                <div class="col-lg-5">        
+
+                    <div class="control-group">
+                        <div class="control-group" ng-class="{error: judicial.food.$invalid && !judicial.food.$pristine}">
+                        <label class="control-label" for="food">Food</label>
+                        </div>
+                        <div class="controls">
+                            <input id="food" name="food" ng-model="judicial.food" type="text" class="form-control" required="" />
+                        </div>
+                    </div> <br /> 
+
+                    <div class="control-group">
+                        <div class="control-group" ng-class="{error: judicial.clothing.$invalid && !judicial.clothing.$pristine}">
+                        <label class="control-label" for="clothing">Clothing</label>
+                        </div>
+                        <div class="controls">
+                            <input id="clothing" name="clothing" ng-model="judicial.clothing" type="text"  class="form-control"required="" />
+                        </div>
+                    </div> <br /> 
+ 
+                    <div class="control-group">
+                        <div class="control-group" ng-class="{error: judicial.electric_bill.$invalid && !judicial.electric_bill.$pristine}">
+                        <label class="control-label" for="electric_bill">Electric Bill</label>
+                        </div>
+                        <div class="controls">
+                            <input id="electric_bill" name="electric_bill" ng-model="judicial.electric_bill" type="text"  class="form-control" required="" />
+                        </div>
+                    </div> <br /> 
+
+                    <div class="control-group">
+                        <div class="control-group" ng-class="{error: judicial.water_bill.$invalid && !judicial.water_bill.$pristine}">
+                        <label class="control-label" for="water_bill">Water Bill</label>
+                        </div>
+                        <div class="controls">
+                            <input id="water_bill" name="water_bill" ng-model="judicial.water_bill" type="text"  class="form-control" required="" />
+                        </div>
+                    </div> 
+                </div>
+                
+
+                <div class="col-lg-5">    
+
+                    <div class="control-group">
+                        <div class="control-group" ng-class="{error: judicial.tuition_fee.$invalid && !judicial.tuition_fee.$pristine}">
+                        <label class="control-label" for="tuition_fee">Tuition Fee</label>
+                        </div>
+                        <div class="controls">
+                            <input id="tuition_fee" name="tuition_fee" ng-model="judicial.tuition_fee" type="text" class="form-control" required="" />
+                        </div>
+                    </div> <br /> 
+
+                    <div class="control-group">
+                        <div class="control-group" ng-class="{error: judicial.telephone_cellphone.$invalid && !judicial.telephone_cellphone.$pristine}">
+                        <label class="control-label" for="telephone_cellphone">Telephone/Cellphone</label>
+                        </div>
+                        <div class="controls">
+                            <input id="telephone_cellphone" name="telephone_cellphone" ng-model="judicial.telephone_cellphone" type="text"  class="form-control" required="" />
+                        </div>
+                    </div> <br /> 
+
+                    <div class="control-group">
+                        <div class="control-group" ng-class="{error: judicial.transportation.$invalid && !judicial.transportation.$pristine}">
+                        <label class="control-label" for="transportation">Transportation</label>
+                        </div>
+                        <div class="controls">
+                            <input id="transportation" name="transportation" ng-model="judicial.transportation" type="text"  class="form-control" required="" />
+                        </div>
+                    </div> <br /> 
+
+                    <div class="control-group">
+                        <div class="control-group" ng-class="{error: judicial.miscellaneous.$invalid && !judicial.miscellaneous.$pristine}">
+                        <label class="control-label" for="miscellaneous">Miscellaneous</label>
+                        </div>
+                        <div class="controls">
+                            <input id="miscellaneous" name="miscellaneous" ng-model="judicial.miscellaneous" type="text" class="form-control" required="" />
+                        </div>
+                    </div> 
+                </div>
+            </div>           
+
+                </tab>
+
+                <tab heading="Problems"> <br /><br /> 
+
+                    <form name="userForm" class="form-vertical">
+                        <div class="control-group">
+                             <label class="control-label" for="barangay"><h4>Select your Problems</h4></label>
+                                <div class="well"><label ng-repeat="problem in problems" >
+                                      <input type="checkbox" checklist-model="judicial.problems" checklist-value="problem"> {{problem}}&nbsp;&nbsp;&nbsp;&nbsp;
+ 
+                                </label> <br><br>
+                                <button ng-click="checkAll()" style="margin-right: 10px">Check all</button>
+                                <button ng-click="uncheckAll()" style="margin-right: 10px">Uncheck all</button>
+                                <button ng-click="checkFirst()">Check first</button>
+                                </div>
+                        </div>
+                    </form> <br />
+                    <div class="well">
+                        <form name="userForm" class="form-vertical" ng-submit="addchildren()">
+
+                            <input type="text" class="form-control" name="childrens" ng-model="judicial.childrens" required />
+                            <button ng-disabled="judicial.$invalid">Add Children</button>
+                        </form>
+                        <ul>
+                            <li ng-repeat="childrens in childrens">
+                            <input type="checkbox" checklist-model="judicial.childrens.name" checklist-value="childrens" />
+                            <span>{{childrens.name}}</span>
+                            </li>
+                        </ul>
+                    </div> <br />
+
+                    <label>Interviewers Comments/Feedback:  </label><br />
+                    <textarea name="comments_feedback" class="form-control" ng-model="judicial.comments_feedback"></textarea>
+                </tab>
+
+                <tab heading="Barangay Records"> <br /> <br />
+
+                <div class="row">
+
+                    <div class="col-lg-5">
+                        <div class="control-group">
+                            <div class="control-group" ng-class="{error: judicial.id_num.$invalid && !judicial.id_num.$pristine}">
+                            <label class="control-label" for="id_num">ID No.</label>
+                            </div>
+                            <div class="controls">
+                                <input id="id_num" name="id_num" ng-model="judicial.id_num" type="text"  class="form-control" required="" />
+                            </div>
+                        </div> <br /> 
+
+                        <div class="control-group">
+                            <div class="control-group" ng-class="{error: judicial.lastname.$invalid && !judicial.lastname.$pristine}">
+                            <label class="control-label" for="lastname">Last Name</label>
+                            </div>
+                            <div class="controls">
+                                <input id="lastname" name="lastname" ng-model="judicial.lastname" type="text" class="form-control" required="" />
+                            </div>
+                        </div> <br /> 
+
+                        <div class="control-group">
+                            <div class="control-group" ng-class="{error: judicial.firstname.$invalid && !judicial.firstname.$pristine}">
+                            <label class="control-label" for="firstname">First Name</label>
+                            </div>
+                            <div class="controls">
+                                <input id="firstname" name="firstname" ng-model="judicial.firstname" type="text" class="form-control" required="" />
+                            </div>
+                        </div> <br /> 
+
+                        <div class="control-group">
+                            <div class="control-group" ng-class="{error: judicial.middlename.$invalid && !judicial.middlename.$pristine}">
+                            <label class="control-label" for="middlename">Middle Name</label>
+                            </div>
+                            <div class="controls">
+                                <input id="middlename" name="lastname" ng-model="judicial.middlename" type="text"  class="form-control" required="" />
+                            </div>
+                        </div> <br /> 
+
+                        <div class="control-group">
+                            <div class="control-group" ng-class="{error: judicial.email_address.$invalid && !judicial.email_address.$pristine}">
+                            <label class="control-label" for="email_address">Email Address</label>
+                            </div>
+                            <div class="controls">
+                                <input id="email_address" name="email_address" ng-model="judicial.email_address" type="text" placeholder="@gmail.com" class="form-control" required="" />
+                            </div>
+                        </div> <br /> 
+
+                        <div class="control-group">
+                            <div class="control-group" ng-class="{error: judicial.num_year_brgy.$invalid && !judicial.num_year_brgy.$pristine}">
+                            <label class="control-label" for="num_year_brgy">No. of year in Barangay</label>
+                            </div>
+                            <div class="controls">
+                                <input id="num_year_brgy" name="num_year_brgy" ng-model="judicial.num_year_brgy" type="text"  class="form-control" required="" />
+                            </div>
+                        </div> <br /> 
+
+                        <div class="control-group">
+                            <label class="control-label" for="sex">Sex</label>
+                                <div class="controls">
+                                    <label class="radio inline" for="male">
+                                        <input type="radio" name="sex" ng-model="judicial.sex" id="male" value="male" checked="checked">
+                                        Male
+                                    </label>
+                                    <label class="radio inline" for="female">
+                                        <input type="radio" name="sex" ng-model="judicial.sex" id="female" value="female" checked="checked">
+                                        Female
+                                    </label>
+                                </div>
+                        </div> <br /> 
+
+                        <div class="control-group">
+                            <div class="control-group" ng-class="{error: judicial.occupation.$invalid && !judicial.occupation.$pristine}">
+                            <label class="control-label" for="occupation">Occupation</label>
+                            </div>
+                            <div class="controls">
+                                <input id="occupation" name="occupation" ng-model="judicial.occupation" type="text" class="form-control" required="" />
+                            </div>
+                        </div> <br /> 
+
+                        <div class="control-group">
+                            <div class="control-group" ng-class="{error: judicial.citizenship.$invalid && !judicial.citizenship.$pristine}">
+                            <label class="control-label" for="citizenship">Citizenship</label>
+                            </div>
+                            <div class="controls">
+                                <input id="citizenship" name="citizenship" ng-model="judicial.citizenship" type="text"  class="form-control" required="" />
+                            </div>
+                        </div> <br /> 
+
+                        <div class="control-group">
+                            <label class="control-label" for="religions">Religions :</label>
+                            <div class="controls">
+                                <select id="religion" ng-model="judicial.religion" name="religion" class="form-control" ng-options="opt.name as opt.name for opt in religions"></select>
+                            </div>
+
+                        </div> <br /> 
+
+                        <div class="control-group" ng-class="{error: judicial.sitio.$invalid && !judicial.sitio.$pristine}">
+                            <label class="control-label" for="sitio">Sitio</label>
+                            <div class="controls">
+                                <input id="sitio" name="sitio" ng-model="judicial.sitio" type="text" class="form-control" required="" />
+                            </div>
+                        </div> <br />  
+
+                        <div class="control-group" ng-class="{error: judicial.jud_dateofbirth.$invalid && !judicial.jud_dateofbirth.$pristine}">
+                                <label class="control-label" for="jud_dateofbirth">Date of Birth</label>
+                                <div class="controls">
+                                <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="judicial.jud_dateofbirth" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="" date-disabled="disabled(date, mode)" ng-required="true" show-weeks="false" show-button-bar="false" />
+                            </div>
+                        </div> <br />
+                        <div class="control-group" ng-class="{error: judicial.telephone.$invalid && !judicial.telephone.$pristine}">
+                            <label class="control-label" for="telephone">Telephone/Mobile/Fax</label>
+                            <div class="controls">
+                                <input id="telephone" name="telephone" ng-model="judicial.telephone" type="text"  class="form-control" required="" />
+                            </div>
+                        </div> <br />
+
+                        <div class="control-group" ng-class="{error: judicial.home_address.$invalid && !judicial.home_address.$pristine}">
+                            <label class="control-label" for="home_address">Home Address</label>
+                            <div class="controls">
+                                <input id="home_address" name="home_address" ng-model="judicial.home_address" type="text"  class="form-control" required="" />
+                            </div>
+                        </div> <br />
+                        <div class="control-group" ng-class="{error: judicial.prev_address.$invalid && !judicial.prev_address.$pristine}">
+                            <label class="control-label" for="prev_address">Previous Address</label>
+                            <div class="controls">
+                                <input id="prev_address" name="prev_address" ng-model="judicial.home_address" type="text"  class="form-control" required="" />
+                            </div>
+                        </div> <br /> 
+
+                        <div class="control-group" ng-class="{error: judicial.birth_place.$invalid && !judicial.birth_place.$pristine}">
+                            <label class="control-label" for="birth_place">Birth Place</label>
+                            <div class="controls">
+                                <input id="birth_place" name="birth_place" ng-model="judicial.birth_place" type="text"  class="form-control" required="" />
+                            </div>
+                        </div> <br /> 
+
+                        <div class="control-group">
+                            <label class="control-label" for="status">Civil Status</label>
+                            <div class="controls">
+                                <label class="radio inline" for="single">
+                                    <input type="radio" name="status" ng-model="judicial.status" id="single" value="single" checked="checked">
+                                    Single
+                                </label>
+
+                                <label class="radio inline" for="married">
+                                    <input type="radio" name="status" ng-model="judicial.status" id="mrriage" value="married">
+                                    Marriage
+                                </label>
+
+                                <label class="radio inline" for="divorce">
+                                    <input type="radio" name="status" ng-model="judicial.status" id="divorce" value="divorce">
+                                    Divorce
+                                </label>
+                            </div>
+                        </div> <br /> <br />
+                    </div>
+
+
+                    <div class="col-lg-5">
+
+                        <label class="control-label" for="tnc"><b>Father Information:</b></label>
+
+                        <div class="control-group" ng-class="{error: judicial.father_lastname.$invalid && !judicial.father_lastname.$pristine}">
+                            <label class="control-label" for="father_lastname">Last Name</label>
+                            <div class="controls">
+                                <input id="father_lastname" name="father_lastname" ng-model="judicial.father_lastname" type="text" class="form-control" required="" />
+                            </div>
+                        </div> <br /> 
+
+                        <div class="control-group" ng-class="{error: judicial.father_firstname.$invalid && !judicial.father_firstname.$pristine}">
+                            <label class="control-label" for="father_firstname">First Name</label>
+                            <div class="controls">
+                                <input id="father_firstname" name="father_firstname" ng-model="judicial.father_firstname" type="text" class="form-control" required="" />
+                            </div>
+                        </div> <br /> 
+
+                        <div class="control-group" ng-class="{error: judicial.father_middlename.$invalid && !judicial.father_middlename.$pristine}">
+                            <label class="control-label" for="father_middlename">Middle Name</label>
+                            <div class="controls">
+                                <input id="father_middlename" name="father_middlename" ng-model="judicial.father_middlename" type="text"  class="form-control" required="" />
+                            </div>
+                        </div> <br /> <br />
+
+                        <label class="control-label" for="tnc"><b>Mother Information:</b></label>
+
+                        <div class="control-group" ng-class="{error: judicial.mother_lastname.$invalid && !judicial.mother_lastname.$pristine}">
+                            <label class="control-label" for="mother_lastname">Last Name</label>
+                            <div class="controls">
+                                <input id="mother_lastname" name="mother_lastname" ng-model="judicial.mother_lastname" type="text"  class="form-control" required="" />
+                            </div>
+                        </div> <br /> 
+
+                        <div class="control-group" ng-class="{error: judicial.mother_firstname.$invalid && !judicial.mother_firstname.$pristine}">
+                            <label class="control-label" for="mother_firstname">First Name</label>
+                            <div class="controls">
+                                <input id="mother_firstname" name="mother_firstname" ng-model="judicial.mother_firstname" type="text" class="form-control" required="" />
+                            </div>
+                        </div> <br /> 
+
+                        <div class="control-group" ng-class="{error: judicial.mother_middlename.$invalid && !judicial.mother_middlename.$pristine}">
+                            <label class="control-label" for="mother_middlename">Middle Name</label>
+                            <div class="controls">
+                                <input id="mother_middlename" name="mother_middlename" ng-model="judicial.mother_middlename" type="text"  class="form-control" required="" />
+                            </div>
+                        </div> <br /> 
+
+                        <div class="control-group" ng-class="{error: judicial.educ_attainment.$invalid && !judicial.educ_attainment.$pristine}">
+                            <label class="control-label" for="educ_attainment">Educational Attainment</label>
+                            <div class="controls">
+                                <input id="educ_attainment" name="educ_attainment" ng-model="judicial.mother_meduc_attainmentieduc_attainmentddeduc_attainmentlename" type="text" class="form-control" required="" />
+                            </div>
+                        </div> <br /> 
+
+                        <div class="control-group" ng-class="{error: judicial.skills.$invalid && !judicial.skills.$pristine}">
+                            <label class="control-label" for="skills">Skills</label>
+                            <div class="controls">
+                                <input id="skills" name="skills" ng-model="judicial.skills" type="text"  class="form-control" required="" />
+                            </div>
+                        </div> <br /> <br />
+
+                        <label class="control-label" for="tnc"><b>Spouse Information:</b></label>
+
+                        <div class="control-group" ng-class="{error: judicial.spouse_lastname.$invalid && !judicial.spouse_lastname.$pristine}">
+                            <label class="control-label" for="spouse_lastname">Last Name</label>
+                            <div class="controls">
+                                <input id="spouse_lastname" name="spouse_lastname" ng-model="judicial.spouse_lastname" type="text"  class="form-control" required="" />
+                            </div>
+                        </div> <br /> 
+
+                        <div class="control-group" ng-class="{error: judicial.spouse_firstname.$invalid && !judicial.spouse_firstname.$pristine}">
+                            <label class="control-label" for="spouse_firstname">First Name</label>
+                            <div class="controls">
+                                <input id="spouse_firstname" name="spouse_firstname" ng-model="judicial.spouse_firstname" type="text" class="form-control" required="" />
+                            </div>
+                        </div> <br /> 
+
+                        <div class="control-group" ng-class="{error: judicial.spouse_middlename.$invalid && !judicial.spouse_middlename.$pristine}">
+                            <label class="control-label" for="spouse_middlename">Middle Name</label>
+                            <div class="controls">
+                                <input id="spouse_middlename" name="spouse_middlename" ng-model="judicial.spouse_middlename" type="text" class="form-control" required="" />
+                            </div>
+                        </div> <br /> 
+
+                        <div class="control-group" ng-class="{error: judicial.children.$invalid && !judicial.children.$pristine}">
+                            <label class="control-label" for="children">No. of Children</label>
+                            <div class="controls">
+                                <input id="children" name="children" ng-model="judicial.children" type="text"  class="form-control" required="" />
+                            </div>
+                        </div><br /> 
+
+                        <h4>Name of Childrens</h4>
+
+                        <div class="control-group">
+                        <div>
+                          <em>Multiple Select</em>
+            <select data-placeholder="Your Favorite Types of Bear" 
+            style="width:350px;" 
+            chosen
+            class="chosen-select" 
+            tabindex="8"
+            ng-model="judicial.problemstest"
+            ng-options="problemstest.name for problemstest in problemstest">                
+            </select>
+
+
+                        </div></div><br /> 
+
+                    </div>
+
+                </div>    
+                </tab>
+            </tabset> <br /><br />
+
+             <br />
+                    <div class="control-group">
+                        <label for="tnc">Term &amp; Condition</label><br />
+                        <label class="checkbox inline" for="tnc">
+                            <input name="tnc" class="form-control" id="tnc" type="checkbox" ng-model="judicial.tnc" required />Accept
+                        </label>
+                    </div
+            
+        </div>
+            </form>
+    </div>
+
+        <div class="modal-footer">
+            <button ng-click="save()" ng-if="judicial.id" ng-disabled="judicial.$invalid || !judicial.tnc" class="btn btn-primary"><i class="icon-white icon-plus"></i> Save</button>
+            <button ng-click="add()" type="submit" ng-if="!judicial.id" ng-disabled="judicial.$invalid || !judicial.tnc" class="btn btn-primary"><i class="icon-white icon-plus"></i> Add</button>
+            <button ng-click="cancel()" class="btn">Cancel</button>
+        </div>
+
+</script> 

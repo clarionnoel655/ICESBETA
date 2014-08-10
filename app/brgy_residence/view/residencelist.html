@@ -1,0 +1,551 @@
+<alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
+    <div class="searchbox">
+        <div class="col-md-3">
+            <div class="inner-addon right-addon">
+              <i class="glyphicon glyphicon-search"></i>
+              <input type="text" ng-model="search" class="form-control search-query pull-left" placeholder="Search&hellip;" />
+            </div>
+        </div>
+    </div>
+        <span class="input-group-btn">
+            <button ng-click="open()" data-toggle="modal" class="btn btn-success pull-right"><span class="glyphicon glyphicon-plus"> New Brgy Residence</span></button>
+        </span>
+<br/>
+<table ng-table="tableParams" class="table table-hover">
+    <thead>
+        <tr>
+            <th width="50">Avatar</th>
+            <th width="150">ID No.</th>
+            <th width="150">Name</th>
+            <th width="130">Address</th>
+            <th width="80">Status</th>
+            <th width="100">barangay</th>
+            <th width="90">Sitio</th>
+            <th width="100">Municipality</th>
+            <th width="100">Province</th>
+            <th width="90">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="(key, brgyprofile) in brgyprofiles | orderByPriority | filter:search | orderBy:'name'">
+            <td data-title="'Name'">
+               <img ng-src="icons/person.png" width="30" height="30">
+            </td>
+
+            <td data-title="'Text'">
+                <span ng-if="!brgyprofile.$edit">{{brgyprofile.$id}}</span>
+                <div ng-if="brgyprofile.$edit"><input class="form-control" type="text" ng-model="brgyprofile.designation" /></div>
+            </td>
+            <td data-title="'Text'">
+                <span ng-if="!brgyprofile.$edit">{{brgyprofile.prof_firstname}} {{brgyprofile.prof_middle_name}} {{brgyprofile.prof_lastname}}</span>
+                <div ng-if="brgyprofile.$edit"><input class="form-control" type="text" ng-model="brgyprofile.designation" /></div>
+            </td>
+            <td data-title="'Text'">
+                <span ng-if="!brgyprofile.$edit">{{brgyprofile.prof_address}}</span>
+                <div ng-if="brgyprofile.$edit"><input class="form-control" type="text" ng-model="brgyprofile.designation" /></div>
+            </td>
+            <td data-title="'Text'">
+                <span ng-if="!brgyprofile.$edit">{{brgyprofile.res_status}}</span>
+                <div ng-if="brgyprofile.$edit"><input class="form-control" type="text" ng-model="brgyprofile.designation" /></div>
+            </td>
+            <td data-title="'Text'">
+                <span ng-if="!brgyprofile.$edit">{{brgyprofile.barangay}}</span>
+                <div ng-if="brgyprofile.$edit"><input class="form-control" type="text" ng-model="brgyprofile.designation" /></div>
+            </td>
+            <td data-title="'Text'">
+                <span ng-if="!brgyprofile.$edit">{{brgyprofile.sitio}}</span>
+                <div ng-if="brgyprofile.$edit"><input class="form-control" type="text" ng-model="brgyprofile.designation" /></div>
+            </td>
+            <td data-title="'Text'">
+                <span ng-if="!brgyprofile.$edit">{{brgyprofile.municipality}}</span>
+                <div ng-if="brgyprofile.$edit"><input class="form-control" type="text" ng-model="brgyprofile.designation" /></div>
+            </td>
+            <td data-title="'Text'">
+                <span ng-if="!brgyprofile.$edit">{{brgyprofile.province}}</span>
+                <div ng-if="brgyprofile.$edit"><input class="form-control" type="text" ng-model="brgyprofile.designation" /></div>
+            </td>
+            <td data-title="'Actions'">
+                <a ng-if="!brgyprofile.$edit" href="" ng-click="open(brgyprofile.$id)"><img ng-src="icons/edit-notes.png" width="30" height="30"></a>
+                <a ng-if="!brgyprofile.$destroy" href="" ng-click="removeRecord(brgyprofile.$id)"><img ng-src="icons/Delete_Icon.png" width="30" height="30"></a>
+                <a ng-if="brgyprofile.$edit" href="" class="btn btn-primary btn-xs" ng-click="save()">Save</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<script type="text/ng-template" id="add_user_modal">
+
+
+    <div class="modal-header">
+        <h3>Residence Profile Form</h3>
+    </div>
+    <div class="modal-body">
+
+        <form name="userForm" class="form-inline">
+          <!--<alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>-->
+            <div class="well">
+                <tabset justified="true">
+                    <tab heading="Profile"> <br /><br />
+
+
+                <div class="row">
+
+                    <div class="col-lg-5">    
+
+                        <div class="control-group" ng-class="{error: brgyprofile.id_num.$invalid && !brgyprofile.id_num.$pristine}">
+                            <label class="control-label" for="id_num">ID No.</label>
+                            <div class="controls">
+                                <input id="id_num" name="id_num" ng-model="brgyprofile.id_num" type="text" class="form-control" required="" />
+                            </div>
+                        </div> <br />
+                        <div class="control-group" ng-class="{error: brgyprofile.prof_lastname.$invalid && !brgyprofile.prof_lastname.$pristine}">
+                            <label class="control-label" for="prof_lastname">Last Name</label>
+                            <div class="controls">
+                                <input id="prof_lastname" name="prof_lastname" ng-model="brgyprofile.prof_lastname" type="text"  class="form-control" required="" />
+                            </div>
+                        </div> <br />
+
+                        <div class="control-group" ng-class="{error: brgyprofile.prof_firstname.$invalid && !brgyprofile.prof_firstname.$pristine}">
+                            <label class="control-label" for="prof_firstname">First Name</label>
+                            <div class="controls">
+                                <input id="prof_firstname" name="prof_firstname" ng-model="brgyprofile.prof_firstname" type="text" class="form-control" required="" />
+                            </div>
+                        </div> <br />
+
+                        <div class="control-group" ng-class="{error: brgyprofile.prof_middle_name.$invalid && !brgyprofile.prof_middle_name.$pristine}">
+                            <label class="control-label" for="prof_middle_name">Middle Name</label>
+                            <div class="controls">
+                                <input id="prof_middle_name" name="prof_middle_name" ng-model="brgyprofile.prof_middle_name" type="text"  class="form-control" required="" />
+                            </div>
+                        </div> <br />
+
+                        <div class="control-group" ng-class="{error: brgyprofile.prof_address.$invalid && !brgyprofile.prof_address.$pristine}">
+                            <label class="control-label" for="prof_address">Address</label>
+                        <div class="controls">
+                            <input id="prof_address" name="prof_address" ng-model="brgyprofile.prof_address" type="text"  class="form-control" required="" />
+                        </div>
+                        </div> <br />
+                    </div>
+
+            <div class="col-lg-5">
+
+                    <div class="control-group">
+                        <label class="control-label" for="res_status">Status</label>
+                        <div class="controls">
+                            <label class="radio inline" for="single">
+                                <input type="radio" name="res_status" ng-model="brgyprofile.res_status" id="single" value="single" checked="checked">
+                                Single
+                            </label> &nbsp;&nbsp;
+
+                            <label class="radio inline" for="married">
+                                <input type="radio" name="res_status" ng-model="brgyprofile.res_status" id="marriage" value="married">
+                                Married
+                            </label>&nbsp;&nbsp;
+
+                            <label class="radio inline" for="divorce">
+                                <input type="radio" name="res_status" ng-model="brgyprofile.res_status" id="divorce" value="divorce">
+                                Divorce
+                            </label>
+                        </div>
+                    </div>  <br />
+
+                    <div class="control-group" ng-class="{error: brgyprofile.barangay.$invalid && !brgyprofile.barangay.$pristine}">
+                            <label class="control-label" for="barangay">Barangay</label>
+                        <div class="controls">
+                            <input id="barangay" name="barangay" ng-model="brgyprofile.barangay" type="text"  class="form-control" required="" />
+                        </div>
+                    </div> <br />
+
+                    <div class="control-group" ng-class="{error: brgyprofile.sitio.$invalid && !brgyprofile.sitio.$pristine}">
+                            <label class="control-label" for="sitio">Sitio</label>
+                        <div class="controls">
+                            <input id="sitio" name="sitio" ng-model="brgyprofile.sitio" type="text" class="form-control" required="" />
+                        </div>
+                    </div> <br />
+
+                    <div class="control-group" ng-class="{error: brgyprofile.municipality.$invalid && !brgyprofile.municipality.$pristine}">
+                            <label class="control-label" for="municipality">City/Municipality</label>
+                        <div class="controls">
+                            <input id="municipality" name="municipality" ng-model="brgyprofile.municipality" type="text" class="form-control" required="" />
+                        </div>
+                    </div> <br />
+
+                    <div class="control-group" ng-class="{error: brgyprofile.province.$invalid && !brgyprofile.province.$pristine}">
+                            <label class="control-label" for="province">Province</label>
+                        <div class="controls">
+                            <input id="province" name="province" ng-model="brgyprofile.province" type="text" class="form-control" required="" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+                    </tab>
+
+                <tab heading="Baseline"> <br /><br />
+                    <div class="row">
+                        <div class="col-lg-4"> 
+                            <div class="control-group" ng-class="{error: brgyprofile.control_num.$invalid && !brgyprofile.control_num.$pristine}">
+                                <label class="control-label" for="control_num">Control No.</label>
+                                <div class="controls">
+                                    <input id="control_num" name="control_num" ng-model="brgyprofile.control_num" type="text"  class="form-control" required="" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4"> 
+                            <div class="control-group" ng-class="{error: brgyprofile.barangay.$invalid && !brgyprofile.barangay.$pristine}">
+                                <label class="control-label" for="barangay">Barangay</label>
+                                <div class="controls">
+                                    <input id="barangay" name="barangay" ng-model="brgyprofile.barangay" type="text"  class="form-control" required="" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3"> 
+                            <div class="control-group" ng-class="{error: brgyprofile.sitio.$invalid && !brgyprofile.sitio.$pristine}">
+                                <label class="control-label" for="sitio">Sitio</label>
+                                <div class="controls">
+                                    <input id="sitio" name="sitio" ng-model="brgyprofile.sitio" type="text" class="form-control" required="" />
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div> <br /><br />
+
+                        <label class="control-label" for="tnc"><b>Interviewers Information:</b></label>
+
+
+                        <div class="row">
+                        
+                            <div class="col-lg-5">        
+                                <div class="control-group" ng-class="{error: brgyprofile.interviewers_Fname.$invalid && !brgyprofile.interviewers_Fname.$pristine}">
+                                    <label class="control-label" for="interviewers_Fname">First name</label>
+                                    <div class="controls">
+                                        <input id="interviewers_Fname" name="interviewers_Fname" ng-model="brgyprofile.interviewers_Fname" type="text"  class="form-control" required="" />
+                                    </div>
+                                </div> <br />
+
+                                <div class="control-group" ng-class="{error: brgyprofile.interviewers_Mname.$invalid && !brgyprofile.interviewers_Mname.$pristine}">
+                                    <label class="control-label" for="interviewers_Mname">Middle name</label>
+                                    <div class="controls">
+                                        <input id="interviewers_Mname" name="interviewers_Mname" ng-model="brgyprofile.interviewers_Mname" type="text"  class="form-control" required="" />
+                                    </div>
+                                </div> <br />
+
+                                <div class="control-group" ng-class="{error: brgyprofile.interviewers_Lname.$invalid && !brgyprofile.interviewers_Lname.$pristine}">
+                                    <label class="control-label" for="interviewers_Lname">Last name</label>
+                                    <div class="controls">
+                                        <input id="interviewers_Lname" name="interviewers_Lname" ng-model="brgyprofile.interviewers_Lname" type="text" class="form-control" required="" />
+                                    </div>
+                                </div> <br />
+
+                                <div class="form-group" ng-class="{error: brgyprofile.dob.$invalid && !brgyprofile.dob.$pristine}">
+                                    <label for="dob">Date of Interview</label>
+                                    <div class="controls">
+                                    <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="consprofile.dob" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="" date-disabled="disabled(date, mode)" ng-required="false" show-weeks="false" show-button-bar="true" />
+                                    </div>
+                                </div>
+                            </div> 
+
+
+                             <div class="col-lg-5">
+
+                                <div class="control-group" ng-class="{error: brgyprofile.house_num.$invalid && !brgyprofile.house_num.$pristine}">
+                                    <label class="control-label" for="house_num">House No.</label>
+                                    <div class="controls">
+                                        <input id="house_num" name="house_num" ng-model="brgyprofile.house_num" type="text"  class="form-control" required="" />
+                                    </div>
+                                </div> <br />
+
+                                <div class="control-group" ng-class="{error: brgyprofile.unit_num.$invalid && !brgyprofile.unit_num.$pristine}">
+                                    <label class="control-label" for="unit_num">Unit No.</label>
+                                    <div class="controls">
+                                        <input id="unit_num" name="unit_num" ng-model="brgyprofile.unit_num" type="text"  class="form-control" required="" />
+                                    </div>
+                                </div> <br />
+
+                                <div class="control-group" ng-class="{error: brgyprofile.block_num.$invalid && !brgyprofile.block_num.$pristine}">
+                                    <label class="control-label" for="block_num">Block No.</label>
+                                    <div class="controls">
+                                        <input id="block_num" name="block_num" ng-model="brgyprofile.block_num" type="text"  class="form-control" required="" />
+                                    </div>
+                                </div> 
+                            </div>
+                        </div>        
+                </tab>
+                    <tab heading="Respondent"> <br /><br />
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <div class="control-group" ng-class="{error: brgyprofile.res_firstname.$invalid && !brgyprofile.res_firstname.$pristine}">
+                                        <label class="control-label" for="res_firstname">Firstname</label>
+                                        <div class="controls">
+                                            <input id="res_firstname" name="res_firstname" ng-model="brgyprofile.res_firstname" type="text" class="form-control" required="" />
+                                        </div>
+                                </div><br />
+
+                                <div class="control-group" ng-class="{error: brgyprofile.res_middle_name.$invalid && !brgyprofile.res_middle_name.$pristine}">
+                                        <label class="control-label" for="res_middle_name">Middle Name</label>
+                                        <div class="controls">
+                                            <input id="res_middle_name" name="res_middle_name" ng-model="brgyprofile.res_middle_name" type="text" class="form-control" required="" />
+                                        </div>
+                                </div><br />
+
+                                <div class="control-group" ng-class="{error: brgyprofile.res_lastname.$invalid && !brgyprofile.res_lastname.$pristine}">
+                                        <label class="control-label" for="res_lastname">Last name</label>
+                                        <div class="controls">
+                                            <input id="res_lastname" name="res_lastname" ng-model="brgyprofile.res_lastname" type="text"  class="form-control" required="" />
+                                        </div>
+                                </div><br />
+
+                                <div class="control-group" ng-class="{error: brgyprofile.res_address.$invalid && !brgyprofile.res_address.$pristine}">
+                                        <label class="control-label" for="res_address">Address</label>
+                                        <div class="controls">
+                                            <input id="res_address" name="res_address" ng-model="brgyprofile.res_address" type="text"  class="form-control" required="" />
+                                        </div>
+                                </div> <br />
+
+                                <div class="control-group" ng-class="{error: brgyprofile.occupation.$invalid && !brgyprofile.occupation.$pristine}">
+                                        <label class="control-label" for="occupation">Occupation</label>
+                                        <div class="controls">
+                                            <input id="occupation" name="occupation" ng-model="brgyprofile.occupation" type="text"  class="form-control" required="" />
+                                        </div>
+                                </div><br />
+
+                            </div>
+
+                            <div class="col-lg-5">
+
+                                <div class="control-group" ng-class="{error: brgyprofile.position.$invalid && !brgyprofile.position.$pristine}">
+                                        <label class="control-label" for="position">Position</label>
+                                        <div class="controls">
+                                            <input id="position" name="position" ng-model="brgyprofile.position" type="text"class="form-control" required="" />
+                                        </div>
+                                </div> <br />
+
+                                <div class="control-group" ng-class="{error: brgyprofile.age.$invalid && !brgyprofile.age.$pristine}">
+                                            <label class="control-label" for="age">Age</label>
+                                        <div class="controls">
+                                            <input id="age" name="age" ng-model="brgyprofile.age" type="text" class="form-control" required="" />
+                                        </div>
+                                </div> <br />
+
+                                <div class="control-group">
+                                        <label class="control-label" for="gender">Gender</label>
+                                        <div class="controls">
+                                            <label class="radio inline" for="male">
+                                                <input type="radio" name="gender" ng-model="brgyprofile.gender" id="male" value="male" checked="checked">
+                                                Male
+                                            </label>
+                                            <label class="radio inline" for="female">
+                                                <input type="radio" name="gender" ng-model="brgyprofile.gender" id="female" value="female">
+                                                Female
+                                            </label>
+                                        </div>
+                                </div> <br />
+
+                                <div class="control-group">
+                                    <label class="control-label" for="status">Civil Status</label>
+                                    <div class="controls">
+                                        <label class="radio inline" for="single">
+                                            <input type="radio" name="status" ng-model="brgyprofile.status" id="single" value="single" checked="checked">
+                                            Single
+                                        </label> &nbsp;&nbsp;
+
+                                        <label class="radio inline" for="mrriage">
+                                            <input type="radio" name="status" ng-model="brgyprofile.status" id="mrriage" value="mrriage">
+                                            Marriage
+                                        </label>&nbsp;&nbsp;
+
+                                        <label class="radio inline" for="divorce">
+                                            <input type="radio" name="status" ng-model="brgyprofile.status" id="divorce" value="divorce">
+                                            Divorce
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </tab>
+
+                    <tab heading="Health"><br /><br />
+
+                        <label class="control-label" for="health"><b>A. HEALTH PROTECTION</b></label><br />
+
+                        <label class="control-label" for="health">Immunization: </label>
+                            <div class="well">
+                                <label ng-repeat="immunization in immunizations">
+                                      <input type="checkbox" checklist-model="brgyprofile.immunizations" checklist-value="immunization"> {{immunization}}&nbsp;&nbsp;&nbsp;
+                                </label>
+                            </div> <br />
+                        <label class="control-label" for="tnc">Nutrition Information and Education: </label>
+                            <div class="well">
+                                <label ng-repeat="nutrition in nutritions">
+                                      <input type="checkbox" checklist-model="brgyprofile.nutritions" checklist-value="nutrition"> {{nutrition}}&nbsp;&nbsp;&nbsp;
+                                </label>
+                            </div> <br />
+                        <label class="control-label" for="health"><b>B. HEALTH SERVICE AVAILED, rank by frequency of visits</b></label>
+                            <div class="well">
+                                <label ng-repeat="health in healths">
+                                      <input type="checkbox" checklist-model="brgyprofile.healths" checklist-value="health"> {{health}}&nbsp;&nbsp;&nbsp;
+                                </label>
+                            </div> <br />
+
+                        <label class="control-label" for="health">Others, specify :</label>
+                            <div class="well">
+                                <label ng-repeat="other in others">
+                                      <input type="checkbox" checklist-model="brgyprofile.others" checklist-value="other"> {{other}}&nbsp;&nbsp;&nbsp;
+                                </label>
+                            </div>    <br />               
+                        <label class="control-label" for="health">Source of Potable Water : we need to know cause of some diseases</label>
+                            <div class="well">
+                                <label ng-repeat="water in waters">
+                                      <input type="checkbox" checklist-model="brgyprofile.waters" checklist-value="water"> {{water}}&nbsp;&nbsp;&nbsp;
+                                </label>
+                            </div>
+                    </tab>
+
+                    <tab heading="Environmental"><br /><br />
+
+                    <label class="control-label" for="environmental">If not MCWD, was the water supply tested ?</label> <br /><br />
+
+                        <div class="control-group">
+                            <div class="controls">
+                                <label class="radio inline" for="envi_answer">
+                                    <input type="radio" name="envi_answer" ng-model="brgyprofile.envi_answer" id="yes" value="yes" checked="checked">
+                                    Yes
+                                </label>
+                                <label class="radio inline" for="envi_answer">
+                                    <input type="radio" name="envi_answer" ng-model="brgyprofile.envi_answer" id="no" value="no">
+                                    No
+                                </label>
+                            </div>
+                        </div><br />
+
+                        <label class="control-label" for="environmental">Is there a continuous supply portable water ?</label>
+
+                        <div class="well">
+                            <label ng-repeat="supply in supplies">
+                                  <input type="checkbox" checklist-model="brgyprofile.supplies" checklist-value="supply"> {{supply}}&nbsp;&nbsp;&nbsp;
+                            </label>
+                        </div>
+
+                        <label class="control-label" for="environmental">Types of toilet facilities used</label>
+
+                        <div class="well">
+                            <label ng-repeat="facility in facilities">
+                                  <input type="checkbox" checklist-model="brgyprofile.facilities" checklist-value="facility"> {{facility}}&nbsp;&nbsp;&nbsp;
+                            </label>
+                        </div>
+
+                        <label class="control-label" for="environmental">Others :</label>
+
+                        <div class="well">
+                            <label ng-repeat="otherone in otherones">
+                                  <input type="checkbox" checklist-model="brgyprofile.otherones" checklist-value="otherone"> {{otherone}}&nbsp;&nbsp;&nbsp;
+                            </label>
+                        </div>
+                    </tab>
+
+                    <tab heading="Culture"> <br /><br />
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="control-group">
+                                    <label class="control-label" for="languagesfamily">Language Spoken by the family</label>
+                                    <div class="controls">
+                                        <select id="language" ng-model="brgyprofile.languagefamily" name="language" class="form-control" ng-options="opt.name as opt.name for opt in languagesfamily"></select>
+                                    </div>
+                                </div> <br />
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="control-group">
+                                    <label class="control-label" for="languagedialect">Dialect Spoken</label>
+                                    <div class="controls">
+                                        <select id="language" ng-model="brgyprofile.languagedialect" name="language" class="form-control" ng-options="opt.name as opt.name for opt in languagesdialect"></select>
+                                    </div>
+                                </div> <br />
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="control-group" ng-class="{error: brgyprofile.cult_others.$invalid && !brgyprofile.cult_others.$pristine}">
+                                    <label class="control-label" for="cult_others">Others, please specify</label>
+                                    <div class="controls">
+                                        <input id="text" name="text" ng-model="brgyprofile.cult_others" type="text" class="form-control" required="" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </tab>
+
+                    <tab heading="Political"> <br /><br />
+
+                       <label class="control-label" for="environmental">Do you know your Barangay Officials.</label>
+
+                            <div class="controls">
+                                <label class="radio inline" for="pol_brgyofficials">
+                                    <input type="radio" name="pol_brgyofficials" ng-model="brgyprofile.pol_brgyofficials" id="yes" value="yes" checked="checked"> Yes
+                                </label> &nbsp;&nbsp;
+                                <label class="radio inline" for="pol_brgyofficials">
+                                    <input type="radio" name="pol_brgyofficials" ng-model="brgyprofile.pol_brgyofficials" id="no" value="no"> No
+                                </label>
+                            </div> <br />
+
+                        <label class="control-label" for="environmental">Are you aware of the existing activities which the Barangay.</label>
+                            <div class="control-group">
+                                <label class="radio inline" for="pol_actbrgy">
+                                        <input type="radio" name="pol_actbrgy" ng-model="brgyprofile.pol_actbrgy" id="yes" value="yes" checked="checked"> Yes
+                                </label> &nbsp;&nbsp;
+                                <label class="radio inline" for="pol_actbrgy">
+                                    <input type="radio" name="pol_actbrgy" ng-model="brgyprofile.pol_actbrgy" id="no" value="no"> No
+                                </label>
+                            </div> <br />
+                        <label class="control-label" for="environmental">If asked to assist/help, are you willing to give your time.</label>
+                            <div class="control-group">
+                                <label class="radio inline" for="pol_assisthelp">
+                                        <input type="radio" name="pol_assisthelp" ng-model="brgyprofile.pol_assisthelp" id="yes" value="yes" checked="checked"> Yes
+                                </label>&nbsp;&nbsp;
+                                <label class="radio inline" for="pol_assisthelp">
+                                    <input type="radio" name="pol_assisthelp" ng-model="brgyprofile.pol_assisthelp" id="no" value="no"> No
+                                </label>
+                            </div> <br />
+
+                        <label class="control-label" for="environmental">If yes, in what particular area ?</label>
+
+                            <div class="control-group">
+                                <label class="radio inline" for="churchreligious">
+                                        <input type="radio" name="area" ng-model="brgyprofile.area" id="churchreligious" value="churchreligious" checked="checked"> Church/Religious
+                                </label> &nbsp; &nbsp;
+                                <label class="radio inline" for="schools">
+                                    <input type="radio" name="area" ng-model="brgyprofile.area" id="schools" value="schools"> Schools
+                                </label> &nbsp; &nbsp;
+                                <label class="radio inline" for="pando">
+                                        <input type="radio" name="area" ng-model="brgyprofile.area" id="pando" value="pando" checked="checked"> Peace and Order
+                                </label> &nbsp; &nbsp;
+                                <label class="radio inline" for="skills">
+                                    <input type="radio" name="area" ng-model="brgyprofile.area" id="skills" value="skills"> Skills
+                                </label><br /><br />
+                      
+                                <div class="controls">
+                                <label class="checkbox inline" for="pol_others">
+                                    <input name="pol_others" class="form-control" id="pol_others" type="checkbox" ng-model="brgyprofile.pol_others" required />Others
+                                </label>
+                            </div>
+                            </div> &nbsp; &nbsp;        
+                          
+                    </tab>
+            </tabset>
+                     <br />
+                    <div class="control-group">
+                        <label for="tnc">Term &amp; Condition</label><br />
+                        <label class="checkbox inline" for="tnc">
+                            <input name="tnc" class="form-control" id="tnc" type="checkbox" ng-model="brgyprofile.tnc" required />Accept
+                        </label>
+                    </div
+            </div>
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <button ng-click="save()" ng-if="brgyprofile.id" ng-disabled="brgyprofile.$invalid || !brgyprofile.tnc" class="btn btn-primary"><i class="icon-white icon-plus"></i> Save</button>
+        <button ng-click="add()" type="submit" ng-if="!brgyprofile.id" ng-disabled="brgyprofile.$invalid || !brgyprofile.tnc" class="btn btn-primary"><i class="icon-white icon-plus"></i> Add</button>
+        <button ng-click="cancel()" class="btn">Cancel</button>
+    </div>
+
+</script> 

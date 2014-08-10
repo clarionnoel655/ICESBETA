@@ -1,0 +1,147 @@
+<!doctype html>
+<html ng-app="icesapp">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>ICES BETA</title>
+    <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="css/searchbox.css">
+    <link rel="stylesheet" type="text/css" href="scripts/bower_components/chosen_v1.1.0/chosen.css">
+    <link rel="stylesheet" type="text/css" href="scripts/bower_components/chosen_v1.1.0/docsupport/prism.css">
+    <link rel="stylesheet" type="text/css" href="scripts/bower_components/angular-chosen/example/vendor/chosen.css" />
+    <link rel="stylesheet" type="text/css" href="scripts/bower_components/angular-chosen/chosen-spinner.css" />
+    <link href="css/glyphicons.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/footer.css">
+
+    <style type="text/css">
+    .app-modal-window .modal-dialog {
+          width: 900px;
+        }
+    #map_canvas{
+        height: 400px;
+    }
+
+    </style>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places, weather&sensor=false"></script>
+
+</head>
+<body>
+    <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+            <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+            </button>
+                <a class="navbar-brand"><img ng-src="logos/cvislogo_glow.png" width="140" height="30"></a>
+            </div>
+            <!-- Collection of nav links and other content for toggling -->
+            <div id="navbarCollapse" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a  ng-show-auth="logout" ng-href="#/">Home</a></li>
+                    <li><a  ng-show-auth="login" ng-href="#/mainpage">Home</a></li>
+                    <li><a  ng-show-auth="login" ng-href="#/businesslist">Brgy Business</a></li>
+                    <li><a  ng-show-auth="login" ng-href="#/brgyclearance">Brgy Clearance</a></li>
+                    <li><a  ng-show-auth="login" ng-href="#/Judicial_list">Brgy Judicial</a></li>
+                    <li><a  ng-show-auth="login" ng-href="#/brgyprofile">Residence Profile</a></li>
+                    <li><a  ng-show-auth="login" ng-href="#/Constituent">Brgy Constituent</a></li>
+               
+                </ul>
+                  <!-- ng-show-auth="login" -->
+                <ul class="nav navbar-nav navbar-right">  
+                    <li><a ng-show-auth="logout" ng-href="#/register">Register</a></li>         
+                    <li><a  ng-show-auth="logout" ng-href="#/login">Login</a></li>
+                    <li><a  ng-show-auth="login" ng-href="#/logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+   <br /><br /><br /><br />
+
+    <div ng-view></div>
+
+    <br /><br /><br /><br />
+    </div>
+
+    <div id="footer">
+        <center><!-- <img ng-src="logos/bmfservices.png" width="60" height="30" class="pull-left"> --> &copy;BMF Services</center>
+        
+    </div>
+    <link rel="stylesheet" type="text/css" href="scripts/bower_components/chosen_v1.1.0/docsupport/prism.js">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.min.js"></script>
+    <script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.10.0.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-resource.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-route.min.js"></script>
+    <script src="https://cdn.firebase.com/v0/firebase.js"></script>
+    <script src="https://cdn-gh.firebase.com/demo-utils-script/demo-utils.js"></script>
+    <script src="https://cdn.firebase.com/js/client/1.0.17/firebase.js"></script>
+    <script src="https://cdn.firebase.com/libs/angularfire/0.5.0/angularfire.min.js"></script>
+    <script src="https://cdn.firebase.com/js/simple-login/1.6.1/firebase-simple-login.js"></script>
+    <script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.10.0.js"></script>
+    <script src="scripts/bower_components/angularfire/angularfire.js"></script>
+    <script src="scripts/bower_components/angularfire/angularfire.min.js"></script>
+    <script src="scripts/bower_components/checklist-model/checklist-model.js"></script>
+    <script src="scripts/bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="scripts/bower_components/angular-resource/angular-resource.min.js"></script>
+    <script src="scripts/bower_components/angular-route/angular-route.min.js"></script>
+    <script src="scripts/bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="scripts/bower_components/firebase/firebase.js"></script>
+    <script src="scripts/bower_components/firebase-simple-login/firebase-simple-login.js"></script>
+    <script src="scripts/bower_components/bootstrap/bootstrap.min.js"></script> 
+    
+    <script src="lib/module.routeSecurity.js"></script>
+    <script src="lib/module.simpleLoginTools.js"></script>
+
+    <!-- root -->
+    <script src="app/app.js"></script>
+    <!-- directives -->
+    
+    <!-- services -->
+    <script src="app/brgy_residence/services/bryProfileService.js"></script>
+    <script src="app/brgy_clearance/services/clearanceServices.js"></script>
+    <script src="app/brgy_business/services/brybusinessService.js"></script>
+    <script src="app/brgy_judicial/services/bryJudicialsvc.js"></script>
+    <script src="app/brgy_constituents/services/bryConstituentsvc.js"></script>
+    <!-- controllers -->
+    <script src="app/userlogin/controllers/loginCtrl.js"></script>
+    <script src="app/userlogin/controllers/registerCtrl.js"></script>
+    <script src="app/userlogin/controllers/logoutCtrl.js"></script>
+    <script src="app/brgy_business/controllers/businessCtrl.js"></script>
+    <script src="app/brgy_clearance/controllers/clearanceCtrl.js"></script>
+    <script src="app/brgy_judicial/controllers/judicialCtrl.js"></script>
+    <script src="directives/chosenDirective/chosen.js"></script>
+    <script src="app/brgy_constituents/controllers/constituentCtrl.js"></script>
+    <script src="app/brgy_residence/controllers/residenceCtrl.js"></script>
+
+    <script src="scripts/bower_components/chosen_v1.1.0/chosen.jquery.js"></script>
+    <script src="scripts/bower_components/chosen_v1.1.0/docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="scripts/bower_components/chosen_v1.1.0/chosen.jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.1.0/chosen.jquery.min.js"></script>
+    <script src="scripts/bower_components/angular-chosen/example/vendor/chosen.jquery.js"></script>
+    <script src="scripts/bower_components/angular-chosen/chosen.js"></script>
+
+    <script type="text/javascript">
+        var config = {
+          '.chosen-select'           : {},
+          '.chosen-select-deselect'  : {allow_single_deselect:true},
+          '.chosen-select-no-single' : {disable_search_threshold:10},
+          '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
+          '.chosen-select-width'     : {width:"95%"}
+        }
+        for (var selector in config) {
+          $(selector).chosen(config[selector]);
+        }
+    </script>
+       
+    
+
+
+</body>
+</html> 

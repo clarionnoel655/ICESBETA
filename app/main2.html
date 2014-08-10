@@ -1,0 +1,142 @@
+<script type="text/javascript">
+    var map;
+    var service;
+
+    function handleSearchResults(results, status){
+        console.log(results);
+        var countnumber = results.length;
+         console.log(countnumber);
+        for (var i = 0; i < results.length; i++) {
+              var marker = new google.maps.Marker({
+                position: results[i].geometry.location,
+                map: map
+
+         });
+        };
+    }
+
+    function performSearh(){
+        var request = {
+            bounds: map.getBounds(),
+            name: "barangay"
+        }
+        service.nearbySearch(request, handleSearchResults);
+    }
+    function initialise(location){
+        console.log(location);
+
+         var currentlocation = new google.maps.LatLng(location.coords.latitude, location.coords.longitude);
+
+         var mapOptions = {
+            center: currentlocation,
+            zoom: 14,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+         map = new google.maps.Map(document.getElementById('map_canvas'),
+               mapOptions);
+
+         var marker = new google.maps.Marker({
+            position: currentlocation,
+            map: map
+         });
+
+         service = new google.maps.places.PlacesService(map);
+         google.maps.event.addListenerOnce(map, 'bounds_changed', performSearh);
+
+         // $('#refresh').click(performSearh);
+
+         var circleOptions = {
+            strokeColor: "#FF3333",
+            StrokeOpacity: 0.8,
+            strokeWeight: 1.5,
+            fillColor: "#FF3333",
+            fillOpacity: 0.35,
+            map: map,
+            center: currentlocation,
+            radius: 600
+         };
+         var circle = new google.maps.Circle(circleOptions);
+
+        //  var trafficLayer = new google.maps.TrafficLayer();
+         
+        //     $('#traffic').click(function () {
+
+        //     if(trafficLayer.getMap()){
+        //            trafficLayer.setMap(null);
+        //     }
+        //     else{
+        //         trafficLayer.setMap(map);
+        //     }
+        //  });
+
+        // var weatherLayer = new google.maps.weather.WeatherLayer({
+        //     temperatureUnits: google.maps.weather.TemperatureUnit.CELSIUS
+        // });
+        // var cloudLayer = new google.maps.weather.CloudLayer();
+
+        // $('#toggle_weather').click(function (){
+        //     if(weatherLayer.getMap() || cloudLayer.getMap()){
+        //         weatherLayer.getMap(null);
+        //         cloudLayer.getMap(null);
+        //     }
+        //     else{
+        //         weatherLayer.setMap(map);
+        //         cloudLayer.setMap(map);
+        //     }
+        // });
+
+    }
+
+    $(document).ready(function () {
+       navigator.geolocation.getCurrentPosition(initialise);
+    });
+</script>
+    
+       <!--  <button class="btn btn-info" id="toggle_weather">weather</button> -->
+    <div class="jumbotron">
+        <center>
+            
+              <h1>ICES APPLICATION</h1>
+              <p>ICES Descriptions here</p>
+               
+        </center>    
+    </div>
+
+    <center class="well">
+        <div id="map_canvas"></div>
+    </center>
+    
+        <div class="row">
+            <div class="col-xs-4">
+                <h2>Business</h2>
+                <p>Provide content here</p>
+                <span ng-show-auth="login" class="animate-if">
+                  <a href="#/businesslist" class="btn btn-info">Business &raquo;</a>
+                </span>
+         
+            </div>
+            <div class="col-xs-4">
+                <h2>Judicial</h2>
+                <p>Provide content here</p>
+                <span ng-show-auth="login" class="animate-if">
+                  <a href="#/Judicial_list" class="btn btn-info">Judicial &raquo;</a>
+                </span>
+           
+            </div>
+            <div class="col-xs-4">
+                <h2>Constituents</h2>
+                <p>Provide content here</p>
+                <span ng-show-auth="login" class="animate-if">
+                <a href="#/Constituent" class="btn btn-info">Constituents &raquo;</a>
+                </span>
+            
+            </div>
+        </div>
+
+        <br/>
+ 
+        <br/>
+        <br/>
+
+        <br/><br/>
+    

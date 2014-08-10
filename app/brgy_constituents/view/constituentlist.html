@@ -1,0 +1,566 @@
+<alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
+    <div class="searchbox">
+        <div class="col-md-3">
+           <div class="inner-addon right-addon">
+              <i class="glyphicon glyphicon-search"></i>
+              <input type="text" ng-model="search" class="form-control search-query pull-left" placeholder="Search&hellip;" />
+            </div>
+        </div>
+    </div>
+            <span class="input-group-btn">
+                <button ng-click="open()" data-toggle="modal" class="btn btn-success pull-right"><span class="glyphicon glyphicon-plus"> New Brgy Constituent</span></button>
+        </span>
+
+<br />
+<table ng-table="tableParams" class="table table-hover">
+    <thead>
+        <tr>
+            <th width="50">Avatar</th>
+            <th width="125">ID No.</th>
+            <th width="125">Name</th>
+            <th width="125">Address</th>
+            <th width="100">Gender</th>
+            <th width="125">Date of Birth</th>
+            <th width="125">Religion</th>
+            <th width="100">Citizenship</th>
+            <th width="100">Barangay</th>
+            <th width="90">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="(key, consprofile) in consprofiles | orderByPriority | filter:search | orderBy:'name'">
+            <td data-title="'Name'">
+               <img ng-src="icons/person.png" width="30" height="30">
+            </td>
+
+            <td data-title="'Text'">
+                <span ng-if="!consprofile.$edit">{{consprofile.$id}}</span>
+                <div ng-if="consprofile.$edit"><input class="form-control" type="text" ng-model="consprofile.designation" /></div>
+            </td>
+
+            <td data-title="'Text'">
+                <span ng-if="!consprofile.$edit">{{consprofile.prof_firstname}} {{consprofile.prof_middle_name}} {{consprofile.prof_lastname}}</span>
+                <div ng-if="consprofile.$edit"><input class="form-control" type="text" ng-model="consprofile.designation" /></div>
+            </td>
+            
+            <td data-title="'Text'">
+                <span ng-if="!consprofile.$edit">{{consprofile.prof_address}}</span>
+                <div ng-if="consprofile.$edit"><input class="form-control" type="text" ng-model="consprofile.designation" /></div>
+            </td>
+
+             <td data-title="'Text'">
+                <span ng-if="!consprofile.$edit">{{consprofile.prof_gender}}</span>
+                <div ng-if="consprofile.$edit"><input class="form-control" type="text" ng-model="consprofile.designation" /></div>
+            </td>
+
+            <td data-title="'Text'">
+                <span ng-if="!consprofile.$edit">{{consprofile.prof_dateofbirth | date}}</span>
+                <div ng-if="consprofile.$edit"><input class="form-control" type="text" ng-model="consprofile.designation" /></div>
+            </td>
+
+            <td data-title="'Text'">
+                <span ng-if="!consprofile.$edit">{{consprofile.religion}}</span>
+                <div ng-if="consprofile.$edit"><input class="form-control" type="text" ng-model="consprofile.designation" /></div>
+            </td>
+
+             <td data-title="'Text'">
+                <span ng-if="!consprofile.$edit">{{consprofile.citizenship}}</span>
+                <div ng-if="consprofile.$edit"><input class="form-control" type="text" ng-model="consprofile.designation" /></div>
+            </td>
+
+             <td data-title="'Text'">
+                <span ng-if="!consprofile.$edit">{{consprofile.barangay}}</span>
+                <div ng-if="consprofile.$edit"><input class="form-control" type="text" ng-model="consprofile.designation" /></div>
+            </td>
+
+            <td data-title="'Actions'" width="90">
+                <a ng-if="!consprofile.$edit" href="" ng-click="open(consprofile.$id)"><img ng-src="icons/edit-notes.png" width="30" height="30"></a>
+                <a ng-if="!consprofile.$destroy" href="" ng-click="removeRecord(consprofile.$id)"><img ng-src="icons/Delete_Icon.png" width="30" height="30"></a>
+                <a ng-if="consprofile.$edit" href="" class="btn btn-primary btn-xs" ng-click="save()">Save</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<script type="text/ng-template" id="add_user_modal">
+
+
+    <div class="modal-header">
+        <h3>Constituent Profile Form</h3>
+    </div>
+
+    <div class="modal-body">
+
+        <form name="userForm" class="form-inline">
+          <!--<alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>-->
+
+    <div class="well">
+        <tabset justified="true">
+            <tab heading="Profile">
+                <div class="row">
+                    <br />
+                    <div class="col-lg-5">
+                        <div class="form-group" ng-class="{error: consprofile.id_num.$invalid && !consprofile.id_num.$pristine}">
+                            <div class="col-xs-7">
+                                <label for="id_num">ID No.</label>
+                                <input id="id_num" class="form-control" name="id_num" ng-model="consprofile.id_num" type="text" required="" />
+                            </div>
+                        </div><br /><br />
+
+                        <div class="form-group" ng-class="{error: consprofile.prof_lastname.$invalid && !consprofile.prof_lastname.$pristine}">
+                            <div class="col-xs-7">
+                                <label for="prof_lastname">Last Name</label>
+                                <input id="prof_lastname" class="form-control" name="prof_lastname" ng-model="consprofile.prof_lastname" type="text" required="" />
+                            </div>
+                        </div><br /><br />
+
+                        <div class="form-group" ng-class="{error: consprofile.prof_firstname.$invalid && !consprofile.prof_firstname.$pristine}">
+                            <div class="col-xs-7">
+                                <label for="prof_firstname">First Name</label>
+                                <input id="prof_firstname" class="form-control" name="prof_firstname" ng-model="consprofile.prof_firstname" type="text" required="" />
+                            </div>
+                        </div><br /><br />
+
+                        <div class="form-group" ng-class="{error: consprofile.prof_middle_name.$invalid && !consprofile.prof_middle_name.$pristine}">
+                            <div class="col-xs-7">
+                                <label for="prof_middle_name">Middle Name</label>
+                                <input id="prof_middle_name" class="form-control" name="prof_middle_name" ng-model="consprofile.prof_middle_name" type="text" required="" />
+                            </div>
+                        </div><br /><br />
+
+                        <div class="form-group" ng-class="{error: consprofile.prof_address.$invalid && !consprofile.prof_address.$pristine}">
+                            <div class="col-xs-7">
+                                <label for="prof_address">Address</label>
+                                <input id="address" class="form-control" name="prof_address" ng-model="consprofile.prof_address" type="text" required="" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-5">
+                        <div class="col-xs-7">
+                            <div class="form-group">
+                                <label class="control-label" for="prof_gender">Gender</label>
+                                <div class="controls">
+                                    <label class="radio inline" for="prof_gender">
+                                        <input type="radio" name="male" ng-model="consprofile.prof_gender" id="male" value="male" checked="checked">
+                                        Male
+                                    </label>&nbsp;&nbsp;&nbsp;
+                                    <label class="radio inline" for="prof_gender">
+                                        <input type="radio" name="female" ng-model="consprofile.prof_gender" id="female" value="female" checked="checked">
+                                        Female
+                                    </label>
+                                </div>
+                            </div>
+                        </div><br /><br /><br />
+
+                        <div class="control-group" ng-class="{error: consprofile.prof_dateofbirth.$invalid && !consprofile.prof_dateofbirth.$pristine}">
+                            &nbsp;&nbsp;&nbsp;
+                                <label class="control-label" for="prof_dateofbirth">Date</label>
+                                <div class="controls">&nbsp;&nbsp;&nbsp;
+                                    <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="consprofile.prof_dateofbirth" min="minDate" max="'2015-06-22'" datepicker-options="" date-disabled="disabled(date, mode)" ng-required="false" show-weeks="false" show-button-bar="true" />
+                                </div>
+
+                        </div><br />
+
+                        <div class="form-group">
+                            <div class="col-xs-7">
+                                <label for="religions">Religions :</label>
+                                <select id="religion" class="form-control" ng-model="consprofile.religion" name="religion" ng-options="opt.name as opt.name for opt in religions" placeholder="Select your Religion"></select>
+                            </div>
+                        </div><br /><br />
+
+                        <div class="form-group" ng-class="{error: consprofile.citizenship.$invalid && !consprofile.citizenship.$pristine}">
+                            <div class="col-xs-7">
+                                <label for="citizenship">Citizenship</label>
+                                <input id="citizenship" class="form-control" name="citizenship" ng-model="consprofile.citizenship" type="text" required="" />
+                            </div>
+                        </div><br /><br />
+
+                        <div class="form-group" ng-class="{error: consprofile.barangay.$invalid && !consprofile.barangay.$pristine}">
+                            <div class="col-xs-7">
+                                <label for="barangay">Barangay</label>
+                                <input id="barangay" class="form-control" name="barangay" ng-model="consprofile.barangay" type="text" required="" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </tab>
+
+            <tab heading="Baseline">
+            <br />
+                <div class="row">
+                    <div class="col-lg-5"> 
+                        <div class="control-group" ng-class="{error: consprofile.control_num.$invalid && !consprofile.control_num.$pristine}">
+                            <label class="control-label" for="control_num">Control No.</label>
+                            <div class="controls">
+                                <input id="control_num" name="control_num" ng-model="consprofile.control_num" type="text"  class="form-control" required="" />
+                            </div>
+                        </div> 
+                    </div><br />
+                    <div class="col-lg-5"> 
+                        <div class="control-group" ng-class="{error: consprofile.sitio.$invalid && !consprofile.sitio.$pristine}">
+                            <label class="control-label" for="sitio">Sitio</label>
+                            <div class="controls">
+                                <input id="sitio" name="sitio" ng-model="consprofile.sitio" type="text" class="form-control" required="" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                    <label class="control-label" for="tnc"><b>Interviewers Information:</b></label>
+
+                <div class="row">
+                
+                    <div class="col-lg-5">        
+                        <div class="control-group" ng-class="{error: consprofile.interviewers_Fname.$invalid && !consprofile.interviewers_Fname.$pristine}">
+                            <label class="control-label" for="interviewers_Fname">First name</label>
+                            <div class="controls">
+                                <input id="interviewers_Fname" name="interviewers_Fname" ng-model="consprofile.interviewers_Fname" type="text"  class="form-control" required="" />
+                            </div>
+                        </div> <br />
+
+                        <div class="control-group" ng-class="{error: consprofile.interviewers_Mname.$invalid && !consprofile.interviewers_Mname.$pristine}">
+                            <label class="control-label" for="interviewers_Mname">Middle name</label>
+                            <div class="controls">
+                                <input id="interviewers_Mname" name="interviewers_Mname" ng-model="consprofile.interviewers_Mname" type="text"  class="form-control" required="" />
+                            </div>
+                        </div> <br />
+
+                        <div class="control-group" ng-class="{error: consprofile.interviewers_Lname.$invalid && !consprofile.interviewers_Lname.$pristine}">
+                            <label class="control-label" for="interviewers_Lname">Last name</label>
+                            <div class="controls">
+                                <input id="interviewers_Lname" name="interviewers_Lname" ng-model="consprofile.interviewers_Lname" type="text" class="form-control" required="" />
+                            </div>
+                        </div> <br />
+
+                        <div class="control-group" ng-class="{error: consprofile.res_dateofinterview.$invalid && !consprofile.res_dateofinterview.$pristine}">
+                            <label class="control-label" for="res_dateofinterview">Date of Interview</label>
+                            <div class="controls">
+                                <input type="text" is-open="opened" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="consprofile.res_dateofinterview" min="minDate" max="'2015-06-22'" datepicker-options="" date-disabled="disabled(date, mode)" ng-required="false" show-weeks="false" show-button-bar="true" />
+                            </div>
+                        </div>
+                    </div> 
+
+
+                     <div class="col-lg-5">
+
+                        <div class="control-group" ng-class="{error: consprofile.house_num.$invalid && !consprofile.house_num.$pristine}">
+                            <label class="control-label" for="house_num">House No.</label>
+                            <div class="controls">
+                                <input id="house_num" name="house_num" ng-model="consprofile.house_num" type="text"  class="form-control" required="" />
+                            </div>
+                        </div> <br />
+
+                        <div class="control-group" ng-class="{error: consprofile.unit_num.$invalid && !consprofile.unit_num.$pristine}">
+                            <label class="control-label" for="unit_num">Unit No.</label>
+                            <div class="controls">
+                                <input id="unit_num" name="unit_num" ng-model="consprofile.unit_num" type="text"  class="form-control" required="" />
+                            </div>
+                        </div> <br />
+
+                        <div class="control-group" ng-class="{error: consprofile.block_num.$invalid && !consprofile.block_num.$pristine}">
+                            <label class="control-label" for="block_num">Block No.</label>
+                            <div class="controls">
+                                <input id="block_num" name="block_num" ng-model="consprofile.block_num" type="text"  class="form-control" required="" />
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+            </tab>
+            <tab heading="Respondent">
+                <br />
+                <div class="row">
+                    <div class="col-lg-5">
+                        <div class="control-group" ng-class="{error: consprofile.res_firstname.$invalid && !consprofile.res_firstname.$pristine}">
+                                <label class="control-label" for="res_firstname">Firstname</label>
+                                <div class="controls">
+                                    <input id="res_firstname" name="res_firstname" ng-model="consprofile.res_firstname" type="text" class="form-control" required="" />
+                                </div>
+                        </div><br />
+
+                        <div class="control-group" ng-class="{error: consprofile.res_middle_name.$invalid && !consprofile.res_middle_name.$pristine}">
+                                <label class="control-label" for="res_middle_name">Middle Name</label>
+                                <div class="controls">
+                                    <input id="res_middle_name" name="res_middle_name" ng-model="consprofile.res_middle_name" type="text" class="form-control" required="" />
+                                </div>
+                        </div><br />
+
+                        <div class="control-group" ng-class="{error: consprofile.res_lastname.$invalid && !consprofile.res_lastname.$pristine}">
+                                <label class="control-label" for="res_lastname">Last name</label>
+                                <div class="controls">
+                                    <input id="res_lastname" name="res_lastname" ng-model="consprofile.res_lastname" type="text"  class="form-control" required="" />
+                                </div>
+                        </div><br />
+
+                        <div class="control-group" ng-class="{error: consprofile.res_address.$invalid && !consprofile.res_address.$pristine}">
+                                <label class="control-label" for="res_address">Address</label>
+                                <div class="controls">
+                                    <input id="res_address" name="res_address" ng-model="consprofile.res_address" type="text"  class="form-control" required="" />
+                                </div>
+                        </div> <br />
+
+                        <div class="control-group" ng-class="{error: consprofile.occupation.$invalid && !consprofile.occupation.$pristine}">
+                                <label class="control-label" for="occupation">Occupation</label>
+                                <div class="controls">
+                                    <input id="occupation" name="occupation" ng-model="consprofile.occupation" type="text"  class="form-control" required="" />
+                                </div>
+                        </div><br />
+
+                    </div>
+
+                    <div class="col-lg-5">
+
+                        <div class="control-group" ng-class="{error: consprofile.position.$invalid && !consprofile.position.$pristine}">
+                                <label class="control-label" for="position">Position</label>
+                                <div class="controls">
+                                    <input id="position" name="position" ng-model="consprofile.position" type="text"class="form-control" required="" />
+                                </div>
+                        </div> <br />
+
+                        <div class="control-group" ng-class="{error: consprofile.res_dateofbirth.$invalid && !consprofile.res_dateofbirth.$pristine}">
+                                <label class="control-label" for="res_dateofbirth">Date of Birth</label>
+                                <div class="controls">
+                                    <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="consprofile.res_dateofbirth" min="minDate" max="'2015-06-22'" datepicker-options="" date-disabled="disabled(date, mode)" ng-required="true" show-weeks="false" show-button-bar="true" />
+                                </div>
+                        </div> <br />
+
+                        <div class="control-group" ng-class="{error: consprofile.age.$invalid && !consprofile.age.$pristine}">
+                                    <label class="control-label" for="age">Age</label>
+                                <div class="controls">
+                                    <input id="age" name="age" ng-model="consprofile.age" type="text" class="form-control" required="" />
+                                </div>
+                        </div> <br />
+
+                        <div class="control-group">
+                                <label class="control-label" for="respon_gender">Gender</label>
+                                <div class="controls">
+                                    <label class="radio inline" for="respon_gender">
+                                        <input type="radio" name="respon_gender" ng-model="consprofile.respon_gender" id="male" value="male" checked="checked">
+                                        Male
+                                    </label>&nbsp;&nbsp;&nbsp;
+                                    <label class="radio inline" for="respon_gender">
+                                        <input type="radio" name="respon_gender" ng-model="consprofile.respon_gender" id="female" value="female">
+                                        Female
+                                    </label>
+                                </div>
+                        </div> <br />
+
+                        <div class="control-group">
+                            <label class="control-label" for="status">Civil Status</label>
+                            <div class="controls">
+                                <label class="radio inline" for="single">
+                                    <input type="radio" name="status" ng-model="consprofile.status" id="single" value="single" checked="checked">
+                                    Single
+                                </label> &nbsp;&nbsp;&nbsp;
+
+                                <label class="radio inline" for="mrriage">
+                                    <input type="radio" name="status" ng-model="consprofile.status" id="mrriage" value="mrriage">
+                                    Marriage
+                                </label>&nbsp;&nbsp;&nbsp;
+
+                                <label class="radio inline" for="divorce">
+                                    <input type="radio" name="status" ng-model="consprofile.status" id="divorce" value="divorce">
+                                    Divorce
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </tab>
+                <tab heading="Health">
+                <br />
+
+                    <label class="control-label" for="health"><b>A. HEALTH PROTECTION</b></label><br />
+
+                    <label class="control-label" for="health">Immunization: </label>
+                        <div class="well">
+                            <label ng-repeat="immunization in immunizations">
+                                  <input type="checkbox" checklist-model="consprofile.immunizations" checklist-value="immunization"> {{immunization}}&nbsp;&nbsp;&nbsp;
+                            </label>
+                        </div>
+                    <label class="control-label" for="tnc">Nutrition Information and Education: </label>
+                        <div class="well">
+                            <label ng-repeat="nutrition in nutritions">
+                                  <input type="checkbox" checklist-model="consprofile.nutritions" checklist-value="nutrition"> {{nutrition}}&nbsp;&nbsp;&nbsp;
+                            </label>
+                        </div>
+                    <label class="control-label" for="health"><b>B. HEALTH SERVICE AVAILED, rank by frequency of visits</b></label>
+                        <div class="well">
+                            <label ng-repeat="health in healths">
+                                  <input type="checkbox" checklist-model="consprofile.healths" checklist-value="health"> {{health}}&nbsp;&nbsp;&nbsp;
+                            </label>
+                        </div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label class="control-label" for="health">Others, specify :</label>
+                        <div class="well">
+                            <label ng-repeat="other in others">
+                                  <input type="checkbox" checklist-model="consprofile.others" checklist-value="other"> {{other}}&nbsp;&nbsp;&nbsp;
+                            </label>
+                        </div>                  
+                    <label class="control-label" for="health">Source of Potable Water : we need to know cause of some diseases</label>
+                        <div class="well">
+                            <label ng-repeat="water in waters">
+                                  <input type="checkbox" checklist-model="consprofile.waters" checklist-value="water"> {{water}}&nbsp;&nbsp;&nbsp;
+                            </label>
+                        </div>
+                </tab>
+
+                <tab heading="Environmental">
+                <br />
+
+                    <label class="control-label" for="environmental">If not MCWD, was the water supply tested ?</label>
+
+                        <div class="control-group">
+                            <div class="controls">
+                                <label class="radio inline" for="envi_answer">
+                                    <input type="radio" name="envi_answer" ng-model="consprofile.envi_answer" id="yes" value="yes" checked="checked">
+                                    Yes
+                                </label>&nbsp;&nbsp;&nbsp;
+                                <label class="radio inline" for="envi_answer">
+                                    <input type="radio" name="envi_answer" ng-model="consprofile.envi_answer" id="no" value="no">
+                                    No
+                                </label>
+                            </div>
+                        </div>
+                        <br />
+                        <label class="control-label" for="environmental">Is there a continuous supply portable water ?</label>
+
+                        <div class="well">
+                            <label ng-repeat="supply in supplies">
+                                  <input type="checkbox" checklist-model="consprofile.supplies" checklist-value="supply"> {{supply}}&nbsp;&nbsp;&nbsp;
+                            </label>
+                        </div>
+
+                        <label class="control-label" for="environmental">Types of toilet facilities used</label>
+
+                        <div class="well">
+                            <label ng-repeat="facility in facilities">
+                                  <input type="checkbox" checklist-model="consprofile.facilities" checklist-value="facility"> {{facility}}&nbsp;&nbsp;&nbsp;
+                            </label>
+                        </div>
+
+                        <label class="control-label" for="environmental">Others :</label>
+
+                        <div class="well">
+                            <label ng-repeat="otherone in otherones">
+                                  <input type="checkbox" checklist-model="consprofile.otherones" checklist-value="otherone"> {{otherone}}&nbsp;&nbsp;&nbsp;
+                            </label>
+                        </div>
+            </tab>
+
+            <tab heading="Culture">
+                <br />
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="languagesfamily">Language Spoken by the family</label>
+                                <select id="language" class="form-control" ng-model="consprofile.languagefamily" name="language" ng-options="opt.name as opt.name for opt in languagesfamily"></select>
+                        </div>
+                    </div>
+                     <div class="col-lg-3">
+                        <div class="form-group">
+                            <label for="languagedialect">Dialect Spoken</label><br />
+                                <select id="language" class="form-control" ng-model="consprofile.languagedialect" name="language" ng-options="opt.name as opt.name for opt in languagesdialect"></select>
+                        </div>
+                    </div>
+                     <div class="col-lg-4">
+                        <div class="form-group" ng-class="{error: consprofile.others.$invalid && !consprofile.others.$pristine}">
+                            <div class="col-xs-9">
+                                <label for="others">Others, please specify</label>
+                                <input id="text" class="form-control" name="text" ng-model="consprofile.others" type="text" required="" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </tab>
+
+            <tab heading="Political">
+                <br />
+
+                   <label class="control-label" for="environmental">Do you know your Barangay Officials.</label>
+
+                        <div class="controls">
+                            <label class="radio inline" for="pol_answer">
+                                <input type="radio" name="pol_answer" ng-model="consprofile.pol_answer" id="yes" value="yes" checked="checked"> Yes
+                            </label>&nbsp;&nbsp;&nbsp;
+
+                            <label class="radio inline" for="pol_answer">
+                                <input type="radio" name="pol_answer" ng-model="consprofile.pol_answer" id="no" value="no"> No
+                            </label>
+                           
+                        </div><br />
+
+                    <label class="control-label" for="environmental">Are you aware of the existing activities which the Barangay.</label>
+
+                        <div class="control-group">
+                            <label class="radio inline" for="pol_actbrgy">
+                                    <input type="radio" name="pol_actbrgy" ng-model="consprofile.pol_actbrgy" id="yes" value="yes" checked="checked"> Yes
+                            </label>&nbsp;&nbsp;&nbsp;
+
+                            <label class="radio inline" for="pol_actbrgy">
+                                <input type="radio" name="pol_actbrgy" ng-model="consprofile.pol_actbrgy" id="no" value="no"> No
+                            </label>
+                        </div><br />
+
+                    <label class="control-label" for="environmental">If asked to assist/help, are you willing to give your time.</label>
+
+                        <div class="control-group">
+                            <label class="radio inline" for="pol_assisthelp">
+                                    <input type="radio" name="pol_assisthelp" ng-model="consprofile.pol_ssisthelp" id="yes" value="yes" checked="checked"> Yes
+                            </label>&nbsp;&nbsp;&nbsp;
+
+                            <label class="radio inline" for="pol_assisthelp">
+                                <input type="radio" name="pol_assisthelp" ng-model="consprofile.pol_assisthelp" id="no" value="no"> No
+                            </label>
+                        </div><br />
+
+                    <label class="control-label" for="environmental">If yes, in what particular area ?</label>
+
+                        <div class="control-group">
+                            <label class="radio inline" for="churchreligious">
+                                    <input type="radio" name="pol_area" ng-model="consprofile.pol_area" id="churchreligious" value="churchreligious" checked="checked"> Church/Religious
+                            </label>&nbsp;&nbsp;&nbsp;
+
+                            <label class="radio inline" for="schools">
+                                <input type="radio" name="pol_area" ng-model="consprofile.pol_area" id="schools" value="schools"> Schools
+                            </label>&nbsp;&nbsp;&nbsp;
+
+                            <label class="radio inline" for="pando">
+                                    <input type="radio" name="area" ng-model="consprofile.area" id="pando" value="pando" checked="checked"> Peace and Order
+                            </label>&nbsp;&nbsp;&nbsp;
+
+                            <label class="radio inline" for="skills">
+                                <input type="radio" name="pol_area" ng-model="consprofile.pol_area" id="skills" value="skills"> Skills
+                            </label>
+
+                        </div><br />
+
+                        <div class="form-group">
+                            <div class="controls">
+                                <label class="checkbox inline" for="others">
+                                    <input name="others" class="form-control" id="others" type="checkbox" ng-model="consprofile.others" required />Others
+                                </label>
+                            </div>
+                        </div>
+                </tab>
+            
+        </tabset>
+
+         <br>
+        <div class="control-group">
+            <label for="tnc">Term &amp; Condition</label><br>
+            <label class="checkbox inline" for="tnc">
+                <input name="tnc" class="form-control" id="tnc" type="checkbox" ng-model="consprofile.tnc" required />Accept
+            </label>
+        </div
+    </div>
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <button ng-click="save()" ng-if="consprofile.id" ng-disabled="consprofile.$invalid || !consprofile.tnc" class="btn btn-primary"><i class="icon-white icon-plus"></i> Save</button>
+        <button ng-click="add()" type="submit" ng-if="!consprofile.id" ng-disabled="consprofile.$invalid || !consprofile.tnc" class="btn btn-primary"><i class="icon-white icon-plus"></i> Add</button>
+        <button ng-click="cancel()" class="btn">Cancel</button>
+    </div>
+
+</script>

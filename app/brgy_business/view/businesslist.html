@@ -1,0 +1,162 @@
+<alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
+    <div class="searchbox">
+        <div class="col-md-3">
+           <div class="inner-addon right-addon">
+              <i class="glyphicon glyphicon-search"></i>
+              <input type="text" ng-model="search" class="form-control search-query pull-left" placeholder="Search&hellip;" />
+            </div>
+        </div>
+        <div class="pull-rith">
+                <button ng-click="open()" data-toggle="modal" class="btn btn-success pull-right"><span class="glyphicon glyphicon-plus"> New Business Clearance</span></button>
+         </div>
+
+    </div>
+         
+<br />
+
+<table ng-table="tableParams" class="table table-hover">
+    <thead>
+        <tr>
+            <th>Avatar</th>
+            <th>Business Owner</th>
+            <th>Type of Business</th>
+            <th>Business Name</th>
+            <th>Business Address</th>
+            <th width="120">Barangay</th>
+            <th width="90">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="(key, business) in businessclearance | orderByPriority | filter:search | orderBy:'name'">
+             <td data-title="'Name'">
+               <img ng-src="icons/person.png" width="30" height="30">
+            </td>
+             <td data-title="'Name'">
+                <span ng-if="!business.$edit">{{business.businessowner}}</span>
+                <div ng-if="business.$edit"><input class="form-control" type="text" ng-model="business.name" /></div>
+            </td>
+            <td data-title="'Name'">
+                <span ng-if="!business.$edit">{{business.businesstype}}</span>
+                <div ng-if="business.$edit"><input class="form-control" type="text" ng-model="business.name" /></div>
+            </td>
+            <td data-title="'Name'">
+                <span ng-if="!business.$edit">{{business.businessname}}</span>
+                <div ng-if="business.$edit"><input class="form-control" type="text" ng-model="business.name" /></div>
+            </td>
+            <td data-title="'Name'">
+                <span ng-if="!business.$edit">{{business.businessaddress}}</span>
+                <div ng-if="business.$edit"><input class="form-control" type="text" ng-model="business.name" /></div>
+            </td>
+            <td data-title="'Text'" >
+                <span ng-if="!business.$edit">{{business.barangay}}</span>
+                <div ng-if="business.$edit"><input class="form-control" type="text" ng-model="business.designation" /></div>
+            </td>
+            <td data-title="'Actions'">
+                <a ng-if="!business.$edit" href=""  ng-click="open(business.$id)"><img ng-src="icons/edit-notes.png" width="30" height="30"></a>
+                <a ng-if="!business.$destroy" href="" ng-click="removeRecord(business.$id)"><img ng-src="icons/Delete_Icon.png" width="30" height="30"></a>
+                <a ng-if="business.$edit" href="" class="btn btn-primary btn-xs" ng-click="save()">Save</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<script type="text/ng-template" id="add_business_modal">
+    <div class="modal-header">
+        <h4>Business Clearance Form</h4>
+    </div>
+            <div class="modal-body">
+                <!--<alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>-->
+                <form name="userForm" class="form-inline">
+                <div class="well">
+                    <div class="row">
+                        <div class="col-lg-5">
+                           <div class="form-group" ng-class="{error: business.businessid.$invalid && !business.businessid.$pristine}">
+                                <div class="col-xs-7">
+                                    <label for="businessid">Business ID</label>
+                                    <input id="businessid" class="form-control" name="businessid" ng-model="business.businessid" type="text" required="" />
+                                </div>
+                            </div><br /><br />
+                           
+                            <div class="form-group" ng-class="{error: business.businessowner.$invalid && !business.businessowner.$pristine}">
+                                <div class="col-xs-8">
+                                    <label for="businessowner">Business Owner</label>
+                                    <input businessowner="text" class="form-control" name="businessowner" id="businessowner" ng-model="business.businessowner" required="">
+                                </div>
+                            </div><br /><br />
+                            <div class="form-group" ng-class="{error: business.businesstype.$invalid && !business.businesstype.$pristine}">
+                                <div class="col-xs-8">
+                                    <label for="businesstype">Type of Business</label>
+                                    <input type="text" class="form-control" id="businesstype" name="businesstype" ng-model="business.businesstype" required="">
+                                </div>
+                            </div><br /><br />
+
+                             <div class="control-group" ng-class="{error: business.businessname.$invalid && !business.businessname.$pristine}">&nbsp;&nbsp;&nbsp;
+                                <label for="businessname">Business Name</label>
+                                <div class="controls">&nbsp;&nbsp;&nbsp;
+                                    <input businessname="text" class="form-control" name="businessname" id="businessname" ng-model="business.businessname" required="">
+                                </div>
+                            </div><br />
+
+                            <div class="control-group" ng-class="{error: business.dateoffiled.$invalid && !business.dateoffiled.$pristine}">&nbsp;&nbsp;&nbsp;
+                                <label class="control-label" for="dateoffiled">Date of Filed</label>
+                                <div class="controls">&nbsp;&nbsp;&nbsp;
+                                    <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="business.dateoffiled" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="" date-disabled="disabled(date, mode)" ng-required="false" show-weeks="false" show-button-bar="true" />
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-7">
+
+                            <div class="form-group">
+                                <label class="control-label" for="region">Region</label>
+                                <div class="controls">
+                                    <select id="region" class="form-control" ng-model="business.region" name="region" ng-options="region.name as region.name for region in regions">
+                                    </select>
+                                </div>
+                            </div><br /><br />
+                            
+                            <div class="form-group">
+                                <label class="control-label" for="province">Provice</label>
+                                <div class="controls">
+                                    <select id="province" class="form-control" data-ng-model="business.selectedOption" name="province" ng-options="province.name as province.name for province in provinces">
+                                    </select>
+                                </div>
+                            </div><br /><br />
+
+                             <div class="form-group">
+                                <label class="control-label" for="municipality">Municipality</label>
+                                <div class="controls">
+                                    <select class="form-control" id="municipality" ng-model="business.municipality" ng-click="select_change($event)" ng-options="m.id as m.name for m in municipality_array">
+                                    </select>
+                                </div>
+                            </div><br /><br />
+
+                            <div class="form-group">
+                                <label class="control-label" for="barangay">Barangay</label>
+                                <div class="controls">
+                                    <select class="form-control" id="barangay" ng-model="business.barangay" ng-options="b.id as b.name for b in filteredArray | filter:{municipal_id: business.municipality}">
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                                
+                    <br>
+                    <div class="control-group">
+                        <label for="tnc">Term &amp; Condition</label><br>
+                        <label class="checkbox inline" for="tnc">
+                            <input name="tnc" class="form-control" id="tnc" type="checkbox" ng-model="business.tnc" required />Accept
+                        </label>
+                    </div>
+                </form>
+            </div>
+       
+        <div class="modal-footer">
+            <button ng-click="save()" ng-if="business.id" ng-disabled="business.$invalid || !business.tnc" class="btn btn-primary"><i class="icon-white icon-plus"></i> Save</button>
+            <button ng-click="add()" type="submit" ng-if="!business.id" ng-disabled="business.$invalid || !business.tnc" class="btn btn-primary"><i class="icon-white icon-plus"></i> Add</button>
+            <button ng-click="cancel()" class="btn">Cancel</button>
+    </div>
+</script> 

@@ -1,0 +1,210 @@
+<alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
+        <div class="searchbox">
+            <div class="col-md-3">
+               <div class="inner-addon right-addon">
+                  <i class="glyphicon glyphicon-search"></i>
+                  <input type="text" ng-model="search" class="form-control search-query pull-left" placeholder="Search&hellip;" />
+                </div>
+            </div>
+        </div>
+        <span class="input-group-btn">
+                <button ng-click="open()" data-toggle="modal" class="btn btn-success pull-right"><span class="glyphicon glyphicon-plus">New Brgy Clearance</span></button>
+        </span>
+
+<br/>
+<table ng-table="tableParams" class="table table-hover">
+    <thead>
+        <tr>
+            <th width="50">Avatar</th>
+            <th width="100">ID No.</th>
+            <th width="125">Name</th>
+            <th width="125">Address</th>
+            <th width="90">Status</th>
+            <th width="90">barangay</th>
+            <th width="90">Resident</th>
+            <th width="70">Sitio</th>
+            <th width="70">Municipality</th>
+            <th width="70">Province</th>
+            <th width="90">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="(key, clearance) in brgyclearance | orderByPriority | filter:search |    orderBy:'name'">
+            <td data-title="'Name'">
+               <img ng-src="icons/person.png" width="30" height="30">
+            </td>
+            <td data-title="'Text'">
+                <span ng-if="!clearance.$edit">{{clearance.$id}}</span>
+                <div ng-if="clearance.$edit"><input class="form-control" type="text" ng-model="clearance.designation" /></div>
+            </td>
+            <td data-title="'Text'">
+                <span ng-if="!clearance.$edit">{{clearance.firstname}} {{clearance.middle_initial}} {{clearance.lastname}}</span>
+                <div ng-if="clearance.$edit"><input class="form-control" type="text" ng-model="clearance.designation" /></div>
+            </td>
+            <td data-title="'Text'">
+                <span ng-if="!clearance.$edit">{{clearance.address}}</span>
+                <div ng-if="clearance.$edit"><input class="form-control" type="text" ng-model="clearance.designation" /></div>
+            </td>
+            <td data-title="'Text'">
+                <span ng-if="!clearance.$edit">{{clearance.res_status}}</span>
+                <div ng-if="clearance.$edit"><input class="form-control" type="text" ng-model="clearance.designation" /></div>
+            </td>
+            <td data-title="'Text'">
+                <span ng-if="!clearance.$edit">{{clearance.barangay}}</span>
+                <div ng-if="clearance.$edit"><input class="form-control" type="text" ng-model="clearance.designation" /></div>
+            </td>
+            <td data-title="'Text'">
+                <span ng-if="!clearance.$edit">{{clearance.clearance_resident}}</span>
+                <div ng-if="clearance.$edit"><input class="form-control" type="text" ng-model="clearance.designation" /></div>
+            </td>
+            <td data-title="'Text'">
+                <span ng-if="!clearance.$edit">{{clearance.sitio}}</span>
+                <div ng-if="clearance.$edit"><input class="form-control" type="text" ng-model="clearance.designation" /></div>
+            </td>
+            <td data-title="'Text'">
+                <span ng-if="!clearance.$edit">{{clearance.municipality}}</span>
+                <div ng-if="clearance.$edit"><input class="form-control" type="text" ng-model="clearance.designation" /></div>
+            </td>
+            <td data-title="'Text'">
+                <span ng-if="!clearance.$edit">{{clearance.province}}</span>
+                <div ng-if="clearance.$edit"><input class="form-control" type="text" ng-model="clearance.designation" /></div>
+            </td>
+            <td data-title="'Actions'">
+                <a ng-if="!clearance.$edit" href="" ng-click="open(clearance.$id)"><img ng-src="icons/edit-notes.png" width="30" height="30"></a>
+                <a ng-if="!clearance.$destroy" href="" ng-click="removeRecord(clearance.$id)"><img ng-src="icons/Delete_Icon.png" width="30" height="30"></a>
+                <a ng-if="clearance.$edit" href="" class="btn btn-primary btn-xs" ng-click="save()">Save</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<script type="text/ng-template" id="add_user_modal">
+    <div class="modal-header">
+        <h3>Barangay Clearance Form</h3>
+    </div>
+    <!--<alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>-->
+    <div class="modal-body">
+        <form name="userForm" class="form-inline">
+    <div class="well">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="form-group" ng-class="{error: clearance.id_num.$invalid && !clearance.id_num.$pristine}">
+                    <div class="col-xs-5">
+                        <label for="id_num">ID No.</label>
+                            <input id="id_num" class="form-control" name="id_num" ng-model="clearance.id_num" type="text" required="" />
+                    </div>
+                </div><br /><br />
+                
+                <div class="form-group" ng-class="{error: clearance.lastname.$invalid && !clearance.lastname.$pristine}">
+                    <div class="col-xs-7">
+                        <label for="lastname">Last Name</label>
+                            <input id="lastname" class="form-control" name="lastname" ng-model="clearance.lastname" type="text" required="" />
+                    </div>
+                </div><br /><br />
+                
+                <div class="form-group" ng-class="{error: clearance.firstname.$invalid && !clearance.firstname.$pristine}">
+                    <div class="col-xs-7">
+                        <label for="firstname">First Name</label>
+                            <input id="firstname" class="form-control" name="firstname" ng-model="clearance.firstname" type="text" required="" />
+                    </div>
+                </div><br /><br />
+                
+                <div class="form-group" ng-class="{error: clearance.middle_initial.$invalid && !clearance.middle_initial.$pristine}">
+                    <div class="col-xs-7">
+                        <label for="middle_initial">Middle Name</label>
+                            <input id="middle_initial" class="form-control" name="middle_initial" ng-model="clearance.middle_initial" type="text" required="" />
+                    </div>
+                </div><br /><br />
+                
+                <div class="form-group" ng-class="{error: clearance.address.$invalid && !clearance.address.$pristine}">
+                    <div class="col-xs-7">
+                        <label for="address">Address</label>
+                        <input id="address" class="form-control" name="address" ng-model="clearance.address" type="text" required="" />
+                    </div>
+                </div><br /><br />
+            </div>
+                
+            <div class="col-lg-4">
+                <div class="control-group">
+                    <label class="control-label" for="res_status">Status</label>
+                    <div class="control">
+                        <label class="radio inline" for="single">
+                            <input type="radio" name="res_status" ng-model="brgyprofile.res_status" id="single" value="single" checked="checked">
+                            Single
+                        </label> &nbsp;&nbsp;
+
+                        <label class="radio inline" for="married">
+                            <input type="radio" name="res_status" ng-model="clearance.res_status" id="marriage" value="married">
+                            Married
+                        </label>&nbsp;&nbsp;
+
+                        <label class="radio inline" for="divorce">
+                            <input type="radio" name="res_status" ng-model="clearance.res_status" id="divorce" value="divorce">
+                            Divorce
+                        </label>
+                    </div>
+                </div> <br />
+
+                <div class="control-group">
+                    <div class="control">
+                        <label for="clearance_resident">Resident in this Barangay?</label><br>
+                            <label class="radio inline" for="yes">
+                                <input type="radio"  name="clearance_resident" ng-model="clearance.clearance_resident" id="yes" value="yes" checked="checked">
+                               Yes
+                            </label>
+                            <label class="radio inline" for="no">
+                                <input type="radio" name="clearance_resident" ng-model="clearance.clearance_resident" id="no" value="no"> No
+                        </label>
+                    </div>
+                </div><br />
+
+                <div class="form-group">
+                    <label for="province">Provice</label>
+                    <div class="controls">
+                        <select id="province" ng-model="clearance.province" name="province" class="form-control" ng-options="opt.name as opt.name for opt in provinces">
+                        </select>
+                    </div>
+                </div><br /><br />
+
+                <div class="form-group">
+                    <label for="municipality">Municipality</label>
+                    <div class="control">
+                        <select class="form-control" id="municipality" ng-model="clearance.municipality" ng-click="select_change($event)" ng-options="m.id as m.name for m in municipality_array">
+                        </select>
+                    </div>
+                </div><br /><br />
+
+                <div class="form-group">
+                    <label for="barangay">Barangay</label>
+                    <div class="control">
+                        <select class="form-control" id="barangay" ng-model="clearance.barangay" ng-options="b.id as b.name for b in filteredArray | filter:{municipal_id: clearance.municipality}">
+                        </select>
+                    </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="control-group" ng-class="{error: clearance.sitio.$invalid && !clearance.sitio.$pristine}">
+                        <div class="control">
+                            <label for="sitio">Sitio</label><br />
+                            <input id="sitio" class="form-control" name="sitio" ng-model="clearance.sitio" type="text" required="" />
+                        </div>
+                    </div>
+                </div><br />
+           
+                            
+           </div>
+            <div class="control-group">
+                <label for="tnc">Term &amp; Condition</label><br>
+                <label class="checkbox inline" for="tnc">
+                    <input name="tnc" class="form-control" id="tnc" type="checkbox" ng-model="clearance.tnc" required />Accept
+                </label>
+            </div>
+   
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button ng-click="save()" ng-if="clearance.id" ng-disabled="clearance.$invalid || !clearance.tnc" class="btn btn-primary"><i class="icon-white icon-plus"></i> Save</button>
+        <button ng-click="add()" type="submit" ng-if="!clearance.id" ng-disabled="clearance.$invalid || !clearance.tnc" class="btn btn-primary"><i class="icon-white icon-plus"></i> Add</button>
+        <button ng-click="cancel()" class="btn">Cancel</button>
+    </div>
+</script> 
